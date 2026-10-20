@@ -1,62 +1,35 @@
-# Dev Automation Kit — Landing Page Oficial
+# Dev Automation Kit — site web
 
-Landing page moderna, responsiva e estática para o software desktop **Dev Automation Kit**, construída com HTML5, Tailwind CSS e JavaScript puro (ES6+).
+Este repositório contém a página de apresentação e a documentação web do Dev Automation Kit. O aplicativo desktop é um projeto separado; seu código não está incluído aqui. A janela interativa na página inicial é uma demonstração com dados simulados.
 
-🌐 **Hospedagem:** GitHub Pages  
-🎨 **Estilo:** Glassmorphic Dark UI com suporte a múltiplos temas visuais (Dark Glass, Windows 7 Aero, Cyberpunk)  
-🛡️ **100% Local & Privado:** Zero dependências de backend ou servidores externos
+## Tecnologias e serviços
 
----
+O site usa HTML, CSS e JavaScript sem processo de build. Tailwind CSS e Lucide são carregados por CDN, e as fontes Inter e JetBrains Mono pelo Google Fonts. Os avatares vêm do GitHub. O formulário de contato envia os dados ao Formspree. Esses recursos dependem de serviços externos; isso é independente do processamento anunciado para o aplicativo desktop.
 
-## 🚀 Como Visualizar Localmente
+## Execução local
 
-Você não precisa de nenhum compilador ou instalador. Basta abrir o arquivo `index.html` diretamente em seu navegador preferido:
+Na raiz do repositório, execute:
 
-1. Dê um duplo clique no arquivo [`index.html`](index.html).
-2. Ou inicie um servidor HTTP local simples (opcional):
-   ```bash
-   # Com Python:
-   python -m http.server 8080
-
-   # Com Node.js (npx):
-   npx serve .
-   ```
-3. Acesse `http://localhost:8080` no navegador.
-
----
-
-## 📁 Estrutura de Arquivos
-
-```text
-dev-automation-kit-web/
-├── index.html     # Estrutura semântica HTML5, Tailwind via CDN, Lucide Icons
-├── styles.css     # Efeitos de Glassmorphism, temas Aero/Cyberpunk e animações
-├── script.js      # Modal estilo WinRAR/Itch.io, seletor de temas e cópia Pix
-└── README.md      # Instruções de uso e deploy
+```sh
+python3 -m http.server 8080
 ```
 
----
+Acesse <http://localhost:8080/>. A conexão com a internet é necessária para carregar os recursos externos.
 
-## ⚙️ Principais Recursos da Página
+## Arquivos
 
-- **Hero & Mockup de Aplicação:** Simulação de janela desktop com árvore de diretórios interativa e calculadora de tokens para Claude, GPT-4o e Gemini.
-- **Grid de Funcionalidades:** Detalhamento técnico das 6 ferramentas centrais do kit (Gerador de Contexto, Bateria de 7 Diagnósticos, Clones AST, Validador .env, Auditor JS/TS e Dependências Fantasma).
-- **Seletor de Temas Interativo:** Alternância instantânea entre *Dark Glass*, *Windows 7 / Frutiger Aero* e *Cyberpunk*.
-- **Modal de Doação/Download (Estilo WinRAR / Itch.io):** Experiência colaborativa com QR Code Pix, botão "Copiar Chave", download gratuito direto e feedback visual.
-- **Seção da Equipe:** Cards dedicados aos 3 desenvolvedores em parceria horizontal: Amizael, Alan Clímaco e Wernnon (Co-criadores / Desenvolvedores).
-- **Totalmente Responsivo:** Otimizado para telas ultra-wide, laptops, tablets e smartphones.
+- `index.html`: apresentação, demonstração, downloads, equipe e contato.
+- `docs.html`: documentação e sumário de tópicos.
+- `styles.css`: estilos compartilhados, da demonstração e das páginas.
+- `script.js`: navegação e interações das duas páginas.
+- `README.md`: instruções deste repositório.
 
----
+## Edição e publicação
 
-## 🌐 Publicação no GitHub Pages
+Edite `index.html` para alterar a apresentação e `docs.html` para atualizar a documentação. Os estilos estão em `styles.css`; preserve as regras do mockup ao alterar a aparência das páginas. As interações são implementadas em `script.js`.
 
-Para publicar no GitHub Pages:
-1. Faça o commit e push dos arquivos para o branch `main` ou `master`:
-   ```bash
-   git add .
-   git commit -m "feat: landing page completa do Dev Automation Kit"
-   git push origin master
-   ```
-2. No GitHub, acesse **Settings** > **Pages**.
-3. Em **Source**, selecione `Deploy from a branch` e aponte para `master` / `/ (root)`.
-4. Salve. O site estará no ar em poucos segundos!
+Para publicar no GitHub Pages, envie os arquivos para o repositório e, em **Settings > Pages**, selecione **Deploy from a branch**, a branch desejada e a pasta raiz. Salve a configuração e consulte o endereço exibido pelo GitHub.
+
+## Créditos e licença
+
+A página apresenta Alan Clímaco, Amizael e Wernnon como co-criadores e desenvolvedores. Não há arquivo de licença neste repositório; confirme os termos de uso na fonte oficial antes de redistribuir o projeto.

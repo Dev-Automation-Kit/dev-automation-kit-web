@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
      ========================================================================= */
   const mobileMenuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
+  const mobileLinks = document.querySelectorAll('#mobile-menu a');
   const mainHeader = document.getElementById('main-header');
 
   if (mobileMenuBtn && mobileMenu) {
@@ -38,11 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   window.addEventListener('scroll', () => {
-    if (window.scrollY > 30) {
-      mainHeader.classList.add('shadow-lg', 'bg-[#0d1117]/95');
-    } else {
-      mainHeader.classList.remove('shadow-lg', 'bg-[#0d1117]/95');
-    }
+    if (mainHeader) mainHeader.classList.toggle('scrolled', window.scrollY > 30);
   });
 
   /* =========================================================================
@@ -331,9 +327,7 @@ document.addEventListener('DOMContentLoaded', () => {
 Pacote Selecionado: ${fileName}
 Data: ${new Date().toLocaleString('pt-BR')}
 
-Status: Verificação de Integridade OK
-Licença: MIT License
-Garantia de Privacidade: Nenhum dado é enviado a servidores externos.
+Este arquivo é informativo e não contém o aplicativo.
 
 Para documentação oficial e novidades do projeto, acesse:
 https://github.com/AlanClimaco/dev-automation-kit-web
@@ -354,7 +348,7 @@ Obrigado por utilizar o Dev Automation Kit!`;
   if (btnModalFreeDownload) {
     btnModalFreeDownload.addEventListener('click', () => {
       closeModal();
-      showToast(`Iniciando download gratuito de ${currentTargetFile}... 📦`);
+      showToast(`Gerando arquivo informativo para ${currentTargetFile}...`);
       triggerDownload(currentTargetFile);
     });
   }
@@ -499,46 +493,51 @@ Obrigado por utilizar o Dev Automation Kit!`;
     });
   }
 
-  /* =========================================================================
-     10. SCROLLSPY (DESTAQUE AUTOMÁTICO DO MENU DE NAVEGAÇÃO)
-     ========================================================================= */
-  const sectionIds = ['sobre', 'recursos', 'temas', 'download', 'equipe', 'contato'];
-  const navLinks = document.querySelectorAll('.nav-link[href^="#"]');
-
-  function scrollActive() {
-    const scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-    // Se estiver no final da página, ativa o último elemento (contato)
-    const isAtBottom = (window.innerHeight + scrollY) >= (document.documentElement.scrollHeight - 50);
-
-    let currentSectionId = '';
-
-    if (isAtBottom) {
-      currentSectionId = sectionIds[sectionIds.length - 1];
-    } else {
-      sectionIds.forEach(id => {
-        const section = document.getElementById(id);
-        if (!section) return;
-
-        const sectionTop = section.offsetTop - 150;
-        const sectionHeight = section.offsetHeight;
-
-        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-          currentSectionId = id;
-        }
+  // Cada grupo acompanha apenas os destinos locais existentes na página.
+  function setupScrollSpy(selector) {
+    const links = Array.from(document.querySelectorAll(selector)).filter(link => {
+      const href = link.getAttribute('href');
+      return href && href.startsWith('#') && document.getElementById(href.slice(1));
+    });
+    if (!links.length) return;
+    const sections = [...new Set(links.map(link => document.getElementById(link.getAttribute('href').slice(1))))];
+    function update() {
+      const marker = window.scrollY + 130;
+      let current = sections[0];
+      sections.forEach(section => {
+        if (section.getBoundingClientRect().top + window.scrollY <= marker) current = section;
+      });
+      links.forEach(link => {
+        if (link.getAttribute('href') === `#${current.id}`) link.setAttribute('aria-current', 'location');
+        else link.removeAttribute('aria-current');
       });
     }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('hashchange', update);
+    update();
+  }
+  setupScrollSpy('[data-section-link]');
+  setupScrollSpy('[data-toc-link]');
 
-    navLinks.forEach(link => {
-      const linkTarget = link.getAttribute('href');
-      if (currentSectionId && linkTarget === `#${currentSectionId}`) {
-        link.classList.add('active');
-      } else {
-        link.classList.remove('active');
+  const toc = document.querySelector('.docs-toc');
+  if (toc && window.matchMedia('(max-width: 700px)').matches) toc.open = false;
+
+  document.querySelectorAll('.copy-code-btn').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      const code = btn.closest('.docs-code-container')?.querySelector('code');
+      if (!code) return;
+      try {
+        if (!navigator.clipboard || !window.isSecureContext) throw new Error('Clipboard unavailable');
+        await navigator.clipboard.writeText(code.textContent);
+        showToast('Código copiado para a área de transferência.');
+      } catch (err) {
+        const range = document.createRange();
+        range.selectNodeContents(code);
+        const selection = window.getSelection();
+        selection.removeAllRanges();
+        selection.addRange(range);
+        showToast('Texto selecionado. Copie usando Ctrl+C ou o menu do navegador.', 5000);
       }
     });
-  }
-
-  window.addEventListener('scroll', scrollActive);
-  scrollActive();
+  });
 });
