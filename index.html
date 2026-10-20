@@ -1,0 +1,1323 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dev Automation Kit — Sua Suíte Desktop de Diagnósticos e Contexto para IA</title>
+  
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="Prepare o código-fonte do seu projeto para LLMs com estimativa exata de tokens e audite a saúde da sua base de código em segundos, 100% local e privado.">
+  <meta name="keywords" content="Dev Automation Kit, contexto para IA, estimativa de tokens, auditoria de código, desktop app, open source, produtividade dev">
+  <meta name="author" content="Amizael, Alan Clímaco, Wernnon">
+  <meta property="og:title" content="Dev Automation Kit — Diagnósticos & Contexto para IA">
+  <meta property="og:description" content="Prepare o código-fonte do seu projeto para LLMs com estimativa de tokens e execute diagnósticos 100% offline.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#0d1117">
+
+  <!-- Favicon SVG Oficial -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2358a6ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='4 17 10 11 4 5'/%3E%3Cline x1='12' x2='20' y1='19' y2='19'/%3E%3C/svg%3E">
+
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS via CDN com Cores do Design System Oficial -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', '"Noto Sans"', 'Inter', 'sans-serif'],
+            mono: ['ui-monospace', 'SFMono-Regular', '"SF Mono"', 'Menlo', 'Consolas', '"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            brand: {
+              primary: '#0d1117',
+              secondary: '#161b22',
+              tertiary: '#21262d',
+              blue: '#58a6ff',
+              blueHover: '#79c0ff',
+              green: '#2ea043',
+              greenHover: '#3fb950',
+              purple: '#bc8cff',
+              amber: '#d29922',
+              red: '#f85149',
+              textPrimary: '#f0f6fc',
+              textSecondary: '#8b949e',
+              textMuted: '#6e7681',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Lucide Icons via CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Estilos Customizados e Design System Oficial -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#0d1117] text-[#f0f6fc] antialiased selection:bg-[#58a6ff]/30 selection:text-[#79c0ff]">
+
+  <!-- =========================================================================
+       A. CABEÇALHO / NAVBAR FIXA (ESTILO DESIGN SYSTEM)
+       ========================================================================= -->
+  <header class="fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300" id="main-header">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-18 py-3.5">
+        
+        <!-- Logo & Versão -->
+        <a href="#" class="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-[#58a6ff] rounded-lg p-1">
+          <div class="w-9 h-9 rounded-xl bg-[#161b22] border border-[rgba(240,246,252,0.15)] flex items-center justify-center text-[#58a6ff] shadow-md group-hover:border-[#58a6ff] transition-all">
+            <!-- Ícone Terminal Oficial do Desktop App -->
+            <svg class="w-5 h-5 text-[#58a6ff]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="4 17 10 11 4 5"/>
+              <line x1="12" x2="20" y1="19" y2="19"/>
+            </svg>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-bold text-base sm:text-lg tracking-tight text-[#f0f6fc] group-hover:text-[#58a6ff] transition-colors">
+              Dev Automation Kit
+            </span>
+            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30">
+              <span class="w-1.5 h-1.5 rounded-full bg-[#3fb950] animate-pulse mr-1.5"></span>
+              v1.0.1
+            </span>
+          </div>
+        </a>
+
+        <!-- Navegação Desktop -->
+        <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium text-[#8b949e]">
+          <a href="#sobre" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Sobre</a>
+          <a href="#recursos" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Recursos</a>
+          <a href="#temas" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Temas</a>
+          <a href="#download" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Download</a>
+          <a href="#equipe" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Equipe</a>
+          <a href="#contato" class="nav-link px-3 py-1.5 rounded-lg hover:text-[#f0f6fc] hover:bg-[#21262d] transition-colors">Contato</a>
+        </nav>
+
+        <!-- CTA Header & GitHub -->
+        <div class="hidden md:flex items-center gap-3">
+          <a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer" class="p-2.5 rounded-xl border border-[rgba(240,246,252,0.1)] hover:border-[rgba(240,246,252,0.25)] bg-[#161b22] hover:bg-[#21262d] text-[#8b949e] hover:text-[#f0f6fc] transition-all shadow-sm" title="Repositório no GitHub" aria-label="GitHub">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+          </a>
+          <a href="#download" class="glow-btn-primary inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-semibold tracking-wide shadow-md">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Baixar Agora</span>
+          </a>
+        </div>
+
+        <!-- Botão Menu Mobile -->
+        <div class="flex md:hidden items-center">
+          <button id="mobile-menu-btn" type="button" class="p-2 rounded-lg text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] focus:outline-none focus:ring-2 focus:ring-[#58a6ff]" aria-label="Abrir Menu">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Menu Dropdown Mobile -->
+    <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-[rgba(240,246,252,0.1)] px-4 pt-2 pb-6 space-y-2">
+      <a href="#sobre" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Sobre</a>
+      <a href="#recursos" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Recursos</a>
+      <a href="#temas" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Temas</a>
+      <a href="#download" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Download</a>
+      <a href="#equipe" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Equipe</a>
+      <a href="#contato" class="block px-3 py-2 rounded-lg text-sm font-medium text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d] mobile-link">Contato</a>
+      <div class="pt-4 border-t border-[rgba(240,246,252,0.1)] flex flex-col gap-3">
+        <a href="#download" class="glow-btn-primary flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold mobile-link">
+          <i data-lucide="download" class="w-4 h-4"></i>
+          <span>Baixar Agora (v1.0.1)</span>
+        </a>
+        <a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border border-[rgba(240,246,252,0.1)] bg-[#161b22] text-[#8b949e] hover:text-[#f0f6fc]">
+          <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+          <span>Ver no GitHub</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================================
+       B. HERO SECTION (APRESENTAÇÃO PRINCIPAL)
+       ========================================================================= -->
+  <section id="sobre" class="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <!-- Luzes de Fundo Sutis -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[360px] bg-gradient-to-tr from-[#58a6ff]/10 via-[#bc8cff]/10 to-[#2ea043]/10 blur-[140px] rounded-full pointer-events-none -z-10"></div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho do Hero -->
+      <div class="text-center max-w-3xl mx-auto">
+        
+        <!-- Badge Superior -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-medium bg-[#161b22] border border-[rgba(240,246,252,0.15)] text-[#58a6ff] shadow-sm mb-6 hover:border-[#58a6ff]/50 transition-colors cursor-default">
+          <span class="flex h-2 w-2 relative">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#3fb950] opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-[#2ea043]"></span>
+          </span>
+          <span class="font-semibold">Processamento 100% Local &amp; Privado</span>
+          <span class="text-[#6e7681]">|</span>
+          <span class="text-[#8b949e]">Zero Envio de Código sem Permissão</span>
+        </div>
+
+        <!-- Título Principal -->
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-[#f0f6fc] leading-[1.15] mb-5">
+          Sua Suíte Desktop de <br class="hidden sm:inline">
+          <span class="text-gradient-blue-purple">Diagnósticos e Contexto</span> para IA
+        </h1>
+
+        <!-- Subtítulo Persuasivo Oficial -->
+        <p class="text-base sm:text-lg text-[#8b949e] leading-relaxed font-normal mb-8 max-w-2xl mx-auto">
+          Prepare o código-fonte do seu projeto para LLMs com estimativa exata de tokens e audite a saúde da sua base de código em segundos, sem enviar nenhum dado para a nuvem.
+        </p>
+
+        <!-- Botões de Ação do Hero -->
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-3.5 mb-14">
+          <button data-download-target="DevAutomationKit-Setup-1.0.1.exe" class="open-modal-btn w-full sm:w-auto glow-btn-primary inline-flex items-center justify-center gap-2.5 px-7 py-3.5 rounded-xl text-sm font-bold shadow-lg hover:shadow-[#58a6ff]/25 transition-all">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>Baixar Grátis (Windows/Linux)</span>
+          </button>
+          
+          <a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold text-[#f0f6fc] bg-[#161b22] hover:bg-[#21262d] border border-[rgba(240,246,252,0.15)] hover:border-[rgba(240,246,252,0.3)] transition-all shadow-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+            <span>Ver no GitHub</span>
+          </a>
+
+          <a href="#recursos" class="w-full sm:w-auto inline-flex items-center justify-center gap-1.5 px-5 py-3.5 rounded-xl text-sm font-medium text-[#8b949e] hover:text-[#58a6ff] transition-colors">
+            <span>Explorar Recursos</span>
+            <i data-lucide="arrow-down" class="w-4 h-4"></i>
+          </a>
+        </div>
+
+        <!-- Badges de Engenharia do Core -->
+        <div class="flex flex-wrap items-center justify-center gap-6 text-xs text-[#8b949e]">
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="cpu" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+            <span>Motor Nativo Node.js &amp; Electron</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#3fb950]"></i>
+            <span>Análise e Diagnóstico 100% Locais</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#bc8cff]"></i>
+            <span>Contexto Otimizado para Claude, GPT &amp; Gemini</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- =====================================================================
+           MOCKUP AUTÊNTICO DA APLICAÇÃO DESKTOP (DESIGN SYSTEM OFICIAL)
+           ===================================================================== -->
+      <div class="mt-12 max-w-5xl mx-auto">
+        <div class="mockup-window rounded-xl overflow-hidden relative">
+          
+          <!-- TOPBAR DESKTOP (Fiel ao App) -->
+          <div class="bg-[#161b22] px-4 py-3 border-b border-[rgba(240,246,252,0.1)] flex items-center justify-between select-none">
+            <div class="flex items-center gap-3">
+              <!-- Botões da Janela -->
+              <div class="flex items-center gap-1.5">
+                <span class="w-3 h-3 rounded-full bg-[#f85149] inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-[#d29922] inline-block"></span>
+                <span class="w-3 h-3 rounded-full bg-[#2ea043] inline-block"></span>
+              </div>
+              <div class="h-4 w-px bg-[rgba(240,246,252,0.1)] mx-1"></div>
+              <!-- Brand Title -->
+              <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-[#58a6ff]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="4 17 10 11 4 5"/>
+                  <line x1="12" x2="20" y1="19" y2="19"/>
+                </svg>
+                <span class="text-xs font-semibold text-[#f0f6fc]">Dev Automation Kit</span>
+                <span class="text-[10px] font-mono px-1.5 py-0.2 rounded-full bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30">v1.0.1</span>
+              </div>
+            </div>
+
+            <!-- Chip Central do Projeto -->
+            <div class="project-chip active hidden sm:inline-flex">
+              <span class="status-dot"></span>
+              <span class="font-mono text-xs text-[#f0f6fc]">/ecommerce-core-ts</span>
+            </div>
+
+            <!-- Ações Topbar -->
+            <div class="flex items-center gap-2">
+              <button type="button" class="px-2.5 py-1 rounded-md bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] text-xs font-medium border border-[rgba(240,246,252,0.1)] flex items-center gap-1.5 transition-colors">
+                <i data-lucide="folder" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                <span class="hidden sm:inline">Trocar Pasta</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- NAVEGAÇÃO POR ABAS: CONTEXTO IA VS DIAGNÓSTICOS -->
+          <div class="app-nav-tabs">
+            <button id="hero-tab-contexto" type="button" class="nav-tab active flex items-center gap-2">
+              <i data-lucide="cpu" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+              <span>Contexto IA</span>
+            </button>
+            <button id="hero-tab-diagnosticos" type="button" class="nav-tab flex items-center gap-2">
+              <i data-lucide="shield" class="w-3.5 h-3.5 text-[#bc8cff]"></i>
+              <span>Diagnósticos &amp; Auditorias</span>
+            </button>
+          </div>
+
+          <!-- CONTEÚDO DA ABA 1: CONTEXTO IA -->
+          <div id="hero-panel-contexto" class="p-4 sm:p-5 bg-[#0d1117] space-y-4">
+            
+            <!-- Grid das 4 Métricas Oficiais do App -->
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+              
+              <!-- Métrica 1: Arquivos Selecionados -->
+              <div class="glass-card p-3 rounded-lg border border-[rgba(240,246,252,0.1)]">
+                <div class="flex items-center justify-between text-xs text-[#8b949e] mb-1">
+                  <span>Arquivos Selecionados</span>
+                  <i data-lucide="files" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                </div>
+                <div class="text-xl font-bold font-mono text-[#f0f6fc]" id="mock-files-count">14</div>
+                <div class="text-[10px] text-[#6e7681]">14 de 18 no repositório</div>
+              </div>
+
+              <!-- Métrica 2: Volume em Texto -->
+              <div class="glass-card p-3 rounded-lg border border-[rgba(240,246,252,0.1)]">
+                <div class="flex items-center justify-between text-xs text-[#8b949e] mb-1">
+                  <span>Volume em Texto</span>
+                  <i data-lucide="database" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                </div>
+                <div class="text-xl font-bold font-mono text-[#58a6ff]" id="mock-bytes-size">142.8 KB</div>
+                <div class="text-[10px] text-[#6e7681]">Tamanho em bytes analisáveis</div>
+              </div>
+
+              <!-- Métrica 3: Tokens Estimados -->
+              <div class="glass-card p-3 rounded-lg border border-[#58a6ff]/30 bg-[#58a6ff]/5">
+                <div class="flex items-center justify-between text-xs text-[#58a6ff] mb-1 font-semibold">
+                  <span>Tokens Estimados</span>
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                </div>
+                <div class="text-xl font-bold font-mono text-[#58a6ff]" id="mock-tokens-count">~35.700</div>
+                <div class="text-[10px] text-[#3fb950] flex items-center gap-1">
+                  <i data-lucide="check" class="w-3 h-3"></i> Cabe no prompt
+                </div>
+              </div>
+
+              <!-- Métrica 4: Higienização -->
+              <div class="glass-card p-3 rounded-lg border border-[#2ea043]/30 bg-[#2ea043]/5">
+                <div class="flex items-center justify-between text-xs text-[#3fb950] mb-1 font-semibold">
+                  <span>Higienização</span>
+                  <i data-lucide="shield-check" class="w-3.5 h-3.5 text-[#3fb950]"></i>
+                </div>
+                <div class="text-xl font-bold text-[#3fb950]">100% Protegido</div>
+                <div class="text-[10px] text-[#6e7681]">Segredos e binários bloqueados</div>
+              </div>
+
+            </div>
+
+            <!-- BARRA DE CONTROLE: GERAÇÃO DE CONTEXTO REAL -->
+            <div class="bg-[#161b22] p-3.5 rounded-lg border border-[rgba(240,246,252,0.1)] flex flex-wrap items-center justify-between gap-3 text-xs">
+              <div class="flex flex-wrap items-center gap-4">
+                <div class="flex items-center gap-2">
+                  <span class="text-[#8b949e]">Modo:</span>
+                  <select id="mock-mode-select" class="bg-[#21262d] border border-[rgba(240,246,252,0.15)] rounded px-2.5 py-1 text-[#f0f6fc] focus:outline-none focus:border-[#58a6ff]">
+                    <option value="single">Arquivo Único (--single)</option>
+                    <option value="split">Dividir por Partes (~300 KB) (--split)</option>
+                    <option value="folder">Dividir por Módulos (--by-folder)</option>
+                  </select>
+                </div>
+                <div class="flex items-center gap-2">
+                  <span class="text-[#8b949e]">Prefixo:</span>
+                  <input type="text" value="contexto" readonly class="bg-[#21262d] border border-[rgba(240,246,252,0.15)] rounded px-2 py-1 text-[#f0f6fc] w-24 font-mono text-[11px]">
+                </div>
+              </div>
+
+              <button id="mock-btn-gerar" type="button" class="glow-btn-primary px-4 py-1.5 rounded-lg font-semibold text-xs flex items-center gap-1.5">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                <span>Gerar Contexto</span>
+              </button>
+            </div>
+
+            <!-- BANNER DE RESULTADO DA GERAÇÃO (SIMULADO) -->
+            <div id="mock-result-banner" class="bg-[#161b22]/90 border border-[#2ea043]/40 p-3 rounded-lg flex items-center justify-between gap-3 text-xs">
+              <div class="flex items-center gap-2.5">
+                <span class="w-6 h-6 rounded-full bg-[#2ea043]/20 text-[#3fb950] flex items-center justify-center shrink-0">
+                  <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                </span>
+                <div>
+                  <div class="font-bold text-[#f0f6fc]">Contexto gerado com sucesso!</div>
+                  <div class="text-[11px] text-[#8b949e]">Arquivos salvos em <code class="text-[#58a6ff]">gerados/ecommerce-core-ts/</code></div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <button id="mock-btn-copiar" type="button" class="px-3 py-1 rounded bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] border border-[rgba(240,246,252,0.15)] flex items-center gap-1 text-[11px]">
+                  <i data-lucide="copy" class="w-3 h-3"></i>
+                  <span>Copiar Conteúdo</span>
+                </button>
+                <button id="mock-btn-explorador" type="button" class="px-3 py-1 rounded bg-[#21262d] hover:bg-[#30363d] text-[#f0f6fc] border border-[rgba(240,246,252,0.15)] flex items-center gap-1 text-[11px]">
+                  <i data-lucide="external-link" class="w-3 h-3"></i>
+                  <span>Abrir no Explorador</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- ÁRVORE DE ARQUIVOS HIERÁRQUICA ESTILO VS CODE -->
+            <div class="bg-[#161b22] border border-[rgba(240,246,252,0.1)] rounded-lg overflow-hidden font-mono text-xs">
+              <div class="bg-[#21262d] px-3 py-2 flex items-center justify-between border-b border-[rgba(240,246,252,0.1)] font-sans">
+                <div class="flex items-center gap-2">
+                  <span class="font-semibold text-xs text-[#f0f6fc]">Árvore de Arquivos &amp; Seleção</span>
+                  <span class="text-[11px] px-2 py-0.2 rounded-full bg-[#58a6ff]/15 text-[#58a6ff] font-mono">14 marcados</span>
+                </div>
+                <div class="text-[11px] text-[#8b949e] flex items-center gap-3">
+                  <span class="flex items-center gap-1 text-[#3fb950]"><i data-lucide="shield" class="w-3 h-3"></i> SafeGuard Ativo</span>
+                </div>
+              </div>
+
+              <!-- Lista da Árvore com Checkboxes e Status -->
+              <div class="p-3 space-y-1.5 text-[#f0f6fc]">
+                
+                <!-- Pasta src/ -->
+                <div class="tree-item flex items-center justify-between p-1 rounded">
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                    <i data-lucide="folder-open" class="w-4 h-4 text-[#d29922]"></i>
+                    <span class="font-semibold text-[#f0f6fc]">src/</span>
+                  </div>
+                  <span class="text-[10px] text-[#6e7681]">pasta do módulo</span>
+                </div>
+
+                <!-- Arquivos aninhados em src/ -->
+                <div class="pl-6 space-y-1">
+                  <div class="tree-item flex items-center justify-between p-1 rounded">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                      <i data-lucide="file-code" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                      <span>index.ts</span>
+                    </div>
+                    <span class="text-[10px] text-[#58a6ff]">1.2k tokens</span>
+                  </div>
+
+                  <div class="tree-item flex items-center justify-between p-1 rounded">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                      <i data-lucide="file-code" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                      <span>services/auth.ts</span>
+                    </div>
+                    <span class="text-[10px] text-[#58a6ff]">3.8k tokens</span>
+                  </div>
+
+                  <div class="tree-item flex items-center justify-between p-1 rounded">
+                    <div class="flex items-center gap-2">
+                      <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                      <i data-lucide="file-code" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                      <span>services/payment.ts</span>
+                    </div>
+                    <span class="text-[10px] text-[#58a6ff]">5.4k tokens</span>
+                  </div>
+                </div>
+
+                <!-- Arquivo Sensível Bloqueado Automaticamente -->
+                <div class="tree-item flex items-center justify-between p-1 rounded bg-[#f85149]/10 border border-[#f85149]/20 text-[#f85149]">
+                  <div class="flex items-center gap-2">
+                    <i data-lucide="lock" class="w-3.5 h-3.5 text-[#f85149]"></i>
+                    <span class="line-through">.env.production</span>
+                  </div>
+                  <span class="text-[9px] uppercase tracking-wider font-semibold bg-[#f85149]/30 px-1.5 py-0.5 rounded">
+                    Bloqueado (Segredo)
+                  </span>
+                </div>
+
+                <!-- Arquivos de raiz -->
+                <div class="tree-item flex items-center justify-between p-1 rounded">
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                    <i data-lucide="file-text" class="w-3.5 h-3.5 text-[#3fb950]"></i>
+                    <span>.env.example</span>
+                  </div>
+                  <span class="text-[10px] text-[#8b949e]">210 tokens</span>
+                </div>
+
+                <div class="tree-item flex items-center justify-between p-1 rounded">
+                  <div class="flex items-center gap-2">
+                    <input type="checkbox" checked class="rounded border-[rgba(240,246,252,0.2)] text-[#58a6ff] bg-[#0d1117] focus:ring-0 cursor-pointer">
+                    <i data-lucide="file-json" class="w-3.5 h-3.5 text-[#d29922]"></i>
+                    <span>package.json</span>
+                  </div>
+                  <span class="text-[10px] text-[#8b949e]">740 tokens</span>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
+          <!-- CONTEÚDO DA ABA 2: DIAGNÓSTICOS (Alternada via JS) -->
+          <div id="hero-panel-diagnosticos" class="p-4 sm:p-5 bg-[#0d1117] space-y-4 hidden">
+            
+            <div class="bg-[#161b22] p-4 rounded-lg border border-[rgba(240,246,252,0.1)] flex items-center justify-between gap-4">
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-[#bc8cff]/15 text-[#bc8cff] flex items-center justify-center shrink-0">
+                  <i data-lucide="activity" class="w-5 h-5"></i>
+                </div>
+                <div>
+                  <h4 class="font-bold text-sm text-[#f0f6fc]">Bateria Completa de Diagnósticos</h4>
+                  <p class="text-xs text-[#8b949e]">Execução em paralelo das 7 rotinas automatizadas com relatório unificado</p>
+                </div>
+              </div>
+              <span class="px-3 py-1 rounded-full text-xs font-semibold bg-[#2ea043]/15 text-[#3fb950] border border-[#2ea043]/30">
+                Score: 98/100
+              </span>
+            </div>
+
+            <!-- Grid com as 7 rotinas reais -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5 text-xs">
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">1. Validador de .env</span>
+                <span class="text-[#3fb950] font-semibold flex items-center gap-1"><i data-lucide="check" class="w-3 h-3"></i> 100% OK</span>
+              </div>
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">2. Dependências Fantasma</span>
+                <span class="text-[#d29922] font-semibold">2 sem uso</span>
+              </div>
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">3. Auditoria JS/TS</span>
+                <span class="text-[#3fb950] font-semibold">Zero leaks</span>
+              </div>
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">4. Detector de Clones AST</span>
+                <span class="text-[#3fb950] font-semibold">0 duplicados</span>
+              </div>
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">5. Análise de Tamanho</span>
+                <span class="text-[#58a6ff] font-semibold">1.2 MB total</span>
+              </div>
+              <div class="p-2.5 rounded bg-[#161b22] border border-[rgba(240,246,252,0.08)] flex items-center justify-between">
+                <span class="text-[#8b949e]">6. Verificador de Links</span>
+                <span class="text-[#3fb950] font-semibold">100% válidos</span>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       C. SEÇÃO DE RECURSOS & DIAGNÓSTICOS (ALINHADA À ARQUITETURA OFICIAL)
+       ========================================================================= -->
+  <section id="recursos" class="py-24 relative border-t border-[rgba(240,246,252,0.1)] bg-[#0d1117]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-[#58a6ff] font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/30 inline-block mb-3">
+          Arquitetura e Recursos Oficiais
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#f0f6fc] tracking-tight mb-4">
+          Tudo o que sua base de código precisa <br class="hidden sm:inline">
+          <span class="text-gradient-blue-purple">antes do próximo prompt de IA</span>
+        </h2>
+        <p class="text-[#8b949e] text-base leading-relaxed">
+          Projetado para eliminar respostas alucinadas de LLMs, otimizar o consumo de tokens e sanear a saúde arquitetural de projetos TypeScript, JavaScript e full-stack.
+        </p>
+      </div>
+
+      <!-- Grid com os 6 Cards Principais do Kit -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <!-- Card 1: Gerador de Contexto Inteligente para IA -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#58a6ff]/15 border border-[#58a6ff]/30 flex items-center justify-center text-[#58a6ff] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-symlink" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#58a6ff] transition-colors mb-1">
+              Gerador Visual de Contexto para IA
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#58a6ff] mb-3">
+              contexto-ia.mjs • Árvore Interativa
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Navegue na árvore de arquivos com seleção granular estilo VS Code. Suporta os modos <code class="text-[#58a6ff] bg-[#21262d] px-1 py-0.5 rounded">--single</code>, <code class="text-[#58a6ff] bg-[#21262d] px-1 py-0.5 rounded">--split</code> (~300 KB) e <code class="text-[#58a6ff] bg-[#21262d] px-1 py-0.5 rounded">--by-folder</code>. Saídas isoladas e organizadas dentro de <code class="text-[#f0f6fc]">gerados/&lt;Projeto&gt;/</code>.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="shield-check" class="w-4 h-4 text-[#3fb950]"></i>
+            <span>Bloqueio automático de .env, chaves e binários</span>
+          </div>
+        </div>
+
+        <!-- Card 2: Bateria Completa de Diagnósticos -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#bc8cff]/15 border border-[#bc8cff]/30 flex items-center justify-center text-[#bc8cff] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="activity" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#bc8cff] transition-colors mb-1">
+              Bateria Completa de Diagnósticos
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#bc8cff] mb-3">
+              hub.mjs • 7 Rotinas em Paralelo
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Executa em sequência todas as 7 rotinas de auditoria automatizadas e apresenta um placar consolidado da saúde da base de código. Gera relatórios objetivos com índice de manutenibilidade prontos para code reviews.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="gauge" class="w-4 h-4 text-[#bc8cff]"></i>
+            <span>Relatório unificado isolado em gerados/</span>
+          </div>
+        </div>
+
+        <!-- Card 3: Detector de Clones de Código -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#2ea043]/15 border border-[#2ea043]/30 flex items-center justify-center text-[#3fb950] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="copy" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#3fb950] transition-colors mb-1">
+              Detector de Clones de Código
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#3fb950] mb-3">
+              detectar-clones.mjs • Hash Normalizado
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Localiza blocos lógicos e trechos duplicados através de janelas de hash normalizadas em múltiplos arquivos. Reduz débito técnico, previne inconsistências e economiza tokens preciosos em prompts de IA.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="git-merge" class="w-4 h-4 text-[#3fb950]"></i>
+            <span>Identifica oportunidades de componentização</span>
+          </div>
+        </div>
+
+        <!-- Card 4: Validador de .env & Configurações -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#d29922]/15 border border-[#d29922]/30 flex items-center justify-center text-[#d29922] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="key" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#d29922] transition-colors mb-1">
+              Validador de .env &amp; Variáveis
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#d29922] mb-3">
+              validar-env.mjs • Conformidade de Staging
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Compara automaticamente variáveis ativas contra o template <code class="text-[#f0f6fc] bg-[#21262d] px-1 py-0.5 rounded">.env.example</code>. Alerta sobre chaves ausentes, valores vazios ou placeholders esquecidos como <code class="text-[#d29922]">TODO</code> e <code class="text-[#d29922]">change_me</code>.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="alert-triangle" class="w-4 h-4 text-[#d29922]"></i>
+            <span>Prevenção contra quebras em deploy de produção</span>
+          </div>
+        </div>
+
+        <!-- Card 5: Auditor de Código JS/TS -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#f85149]/15 border border-[#f85149]/30 flex items-center justify-center text-[#f85149] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="file-check-2" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#f85149] transition-colors mb-1">
+              Auditor de Antipadrões JS/TS
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#f85149] mb-3">
+              audit-project.cjs • Análise Estática
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Localiza más práticas contemporâneas: hooks React sem cleanup, requisições DELETE com body, anotações <code class="text-[#f85149]">@ts-ignore</code>, chamadas inseguras e instruções <code class="text-[#58a6ff]">console.log</code> esquecidas em produção.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="code-2" class="w-4 h-4 text-[#f85149]"></i>
+            <span>Aponta linha e arquivo com sugestão de correção</span>
+          </div>
+        </div>
+
+        <!-- Card 6: Estrutura, Links & Dependências Fantasma -->
+        <div class="glass-card p-6 flex flex-col justify-between group">
+          <div>
+            <div class="w-11 h-11 rounded-xl bg-[#58a6ff]/15 border border-[#58a6ff]/30 flex items-center justify-center text-[#58a6ff] mb-4 group-hover:scale-105 transition-transform">
+              <i data-lucide="package-x" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-lg font-bold text-[#f0f6fc] group-hover:text-[#58a6ff] transition-colors mb-1">
+              Dependências, Links &amp; Estrutura
+            </h3>
+            <span class="inline-block text-[11px] font-mono font-semibold text-[#58a6ff] mb-3">
+              buscar-dependencias • verificar-links
+            </span>
+            <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+              Cruza pacotes declarados no <code class="text-[#f0f6fc] bg-[#21262d] px-1 py-0.5 rounded">package.json</code> contra importações reais no código para indicar o que pode ser removido, rastreia links quebrados em documentações Markdown e confere a arquitetura de diretórios.
+            </p>
+          </div>
+          <div class="pt-3 border-t border-[rgba(240,246,252,0.1)] flex items-center text-xs text-[#8b949e] gap-1.5">
+            <i data-lucide="link-2-off" class="w-4 h-4 text-[#58a6ff]"></i>
+            <span>Sanitização do node_modules e documentações</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       D. SEÇÃO DE TEMAS & PERSONALIZAÇÃO VISUAL (#temas)
+       ========================================================================= -->
+  <section id="temas" class="py-24 relative overflow-hidden bg-[#0d1117] border-t border-[rgba(240,246,252,0.1)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção de Temas -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <span class="text-[#58a6ff] font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/30 inline-block mb-3">
+          Customização &amp; Ergonomia Visual
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#f0f6fc] tracking-tight mb-4">
+          Sua Ferramenta, Seu Estilo
+        </h2>
+        <p class="text-[#8b949e] text-base leading-relaxed">
+          Escolha entre diferentes estéticas visuais para acompanhar seu fluxo de trabalho. Alterne abaixo para experimentar as interfaces em tempo real.
+        </p>
+
+        <!-- Seletor de Temas Interativo (3 Botões) -->
+        <div class="mt-8 inline-flex p-1.5 rounded-xl bg-[#161b22] border border-[rgba(240,246,252,0.1)] shadow-xl flex-wrap justify-center gap-1.5" role="tablist" aria-label="Seletor de Temas">
+          
+          <!-- Botão 1: Dark Glass -->
+          <button type="button" id="theme-btn-dark" class="theme-switch-btn active px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 bg-[#21262d] text-[#f0f6fc] border border-[#58a6ff]" data-theme="dark-glass">
+            <i data-lucide="sparkles" class="w-4 h-4 text-[#58a6ff]"></i>
+            <span>Dark Glass (Oficial)</span>
+          </button>
+
+          <!-- Botão 2: Windows 7 / Frutiger Aero -->
+          <button type="button" id="theme-btn-aero" class="theme-switch-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d]" data-theme="aero">
+            <i data-lucide="layers" class="w-4 h-4 text-sky-400"></i>
+            <span>Windows 7 / Frutiger Aero</span>
+          </button>
+
+          <!-- Botão 3: Cyberpunk / Neo-Futurista -->
+          <button type="button" id="theme-btn-cyber" class="theme-switch-btn px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold transition-all flex items-center gap-2 text-[#8b949e] hover:text-[#f0f6fc] hover:bg-[#21262d]" data-theme="cyberpunk">
+            <i data-lucide="terminal" class="w-4 h-4 text-pink-400"></i>
+            <span>Cyberpunk / Neo-Futurista</span>
+          </button>
+
+        </div>
+      </div>
+
+      <!-- Container de Demonstração do Tema (Manipulado via JS) -->
+      <div class="max-w-4xl mx-auto">
+        <div id="theme-preview-card" class="theme-container theme-dark-glass rounded-xl overflow-hidden transition-all duration-300 p-1">
+          
+          <div class="theme-header px-4 py-3 flex items-center justify-between select-none">
+            <div class="flex items-center gap-2">
+              <span class="w-3 h-3 rounded-full bg-[#f85149] inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#d29922] inline-block"></span>
+              <span class="w-3 h-3 rounded-full bg-[#2ea043] inline-block"></span>
+              <span id="theme-preview-title" class="ml-2 text-xs font-mono font-medium opacity-90">Dev Automation Kit — [Dark Glass Mode]</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <span id="theme-badge-label" class="theme-badge text-[11px] font-semibold px-2.5 py-0.5 rounded-md">
+                Dark Glass UI
+              </span>
+            </div>
+          </div>
+
+          <!-- Conteúdo Interno da Prévia -->
+          <div class="grid grid-cols-1 sm:grid-cols-12 min-h-[260px] border-t border-[rgba(240,246,252,0.1)]">
+            
+            <!-- Mini Sidebar do Tema -->
+            <div class="theme-sidebar sm:col-span-4 p-4 text-xs font-mono flex flex-col justify-between space-y-3">
+              <div>
+                <div class="text-[11px] font-bold uppercase tracking-wider opacity-60 mb-2">Módulos Ativos</div>
+                <ul class="space-y-1.5 opacity-85">
+                  <li class="flex items-center gap-2 font-semibold">
+                    <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-[#3fb950]"></i>
+                    <span>Context Generator</span>
+                  </li>
+                  <li class="flex items-center gap-2 opacity-75">
+                    <i data-lucide="activity" class="w-3.5 h-3.5"></i>
+                    <span>Diagnóstico de Código</span>
+                  </li>
+                  <li class="flex items-center gap-2 opacity-75">
+                    <i data-lucide="shield" class="w-3.5 h-3.5"></i>
+                    <span>Validador .env</span>
+                  </li>
+                  <li class="flex items-center gap-2 opacity-75">
+                    <i data-lucide="layers" class="w-3.5 h-3.5"></i>
+                    <span>Clones AST</span>
+                  </li>
+                </ul>
+              </div>
+              <div class="text-[10px] opacity-60 pt-2 border-t border-current/10">
+                Memória: 42 MB • 0.0% CPU
+              </div>
+            </div>
+
+            <!-- Área Central do Tema -->
+            <div class="theme-content-area sm:col-span-8 p-5 flex flex-col justify-between">
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <h4 id="theme-preview-heading" class="text-sm font-bold">Diagnóstico em Andamento</h4>
+                  <span id="theme-tag-element" class="theme-tag text-[10px] font-mono px-2 py-0.5 rounded">Engine v1.0.1</span>
+                </div>
+                <p id="theme-preview-desc" class="text-xs leading-relaxed opacity-80 mb-4">
+                  O estilo Dark Glass oferece contraste ideal para programar em ambientes com baixa luminosidade, reduzindo a fadiga visual com camadas translúcidas e destaques azuis e roxos.
+                </p>
+
+                <!-- Status Bars Simuladas do Tema -->
+                <div class="space-y-2 mb-4">
+                  <div class="flex justify-between text-[11px] opacity-75 font-mono">
+                    <span>Taxa de Otimização de Tokens:</span>
+                    <span class="font-bold">78.4%</span>
+                  </div>
+                  <div class="w-full bg-black/20 h-2 rounded-full overflow-hidden">
+                    <div class="bg-gradient-to-r from-[#58a6ff] to-[#bc8cff] h-2 rounded-full" style="width: 78.4%"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="flex items-center justify-between pt-3 border-t border-current/10">
+                <span class="text-xs font-mono opacity-70">Status: Pronto para compilação</span>
+                <button type="button" class="theme-btn px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5">
+                  <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                  <span>Executar Otimização</span>
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       E. SEÇÃO DE DOWNLOAD & CARDS DIRETOS (#download)
+       ========================================================================= -->
+  <section id="download" class="py-24 relative bg-gradient-to-b from-[#0d1117] via-[#161b22] to-[#0d1117] border-t border-[rgba(240,246,252,0.1)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Seção de Download -->
+      <div class="text-center max-w-3xl mx-auto mb-14">
+        <span class="text-[#58a6ff] font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/30 inline-block mb-3">
+          Download Livre &amp; Independente
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#f0f6fc] tracking-tight mb-4">
+          Pronto para otimizar seu código?
+        </h2>
+        <p class="text-[#8b949e] text-base leading-relaxed">
+          O Dev Automation Kit é 100% gratuito e livre para uso. Se o projeto ajuda seu dia a dia, considere apoiar o desenvolvimento.
+        </p>
+      </div>
+
+      <!-- Grid com 2 Cards de Plataforma (Windows e Linux) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+        
+        <!-- Card 1: Windows -->
+        <div class="glass-card p-7 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-xl bg-[#58a6ff]/15 border border-[#58a6ff]/30 flex items-center justify-center text-[#58a6ff] shadow-sm">
+                <!-- Ícone Windows em SVG -->
+                <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.949-1.801"/>
+                </svg>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30">
+                Mais Popular
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-[#f0f6fc] mb-1">Windows</h3>
+            <p class="text-xs font-mono text-[#58a6ff] mb-3">v1.0.1 • Windows 10 e 11 (64-bit)</p>
+            <p class="text-xs text-[#8b949e] mb-6 leading-relaxed">
+              Instalador executável automático com suporte a menu de contexto ou versão portátil independente que não requer privilégios de administrador.
+            </p>
+
+            <ul class="space-y-2 text-xs text-[#8b949e] mb-6 font-mono">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                <span>Instalador NSIS (.exe)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                <span>Versão Portátil (.zip)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+                <span>Assinatura de hash SHA-256</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Botões Windows -->
+          <div class="space-y-2.5">
+            <button data-download-target="DevAutomationKit-Setup-1.0.1.exe" class="open-modal-btn w-full glow-btn-primary flex items-center justify-center gap-2 py-3 px-5 rounded-lg font-bold text-xs shadow-md">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>Baixar Instalador (.exe)</span>
+            </button>
+            <button data-download-target="DevAutomationKit-v1.0.1-win-portable.zip" class="open-modal-btn w-full bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-[#f0f6fc] border border-[rgba(240,246,252,0.1)] flex items-center justify-center gap-1.5 py-2 px-4 rounded-lg text-xs font-medium transition-colors">
+              <i data-lucide="archive" class="w-3.5 h-3.5"></i>
+              <span>Versão Portátil (.zip)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Card 2: Linux -->
+        <div class="glass-card p-7 flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center justify-between mb-5">
+              <div class="w-12 h-12 rounded-xl bg-[#bc8cff]/15 border border-[#bc8cff]/30 flex items-center justify-center text-[#bc8cff] shadow-sm">
+                <!-- Ícone Terminal/Linux -->
+                <i data-lucide="terminal" class="w-6 h-6"></i>
+              </div>
+              <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-[#bc8cff]/15 text-[#bc8cff] border border-[#bc8cff]/30">
+                Multi-distro
+              </span>
+            </div>
+
+            <h3 class="text-xl font-bold text-[#f0f6fc] mb-1">Linux</h3>
+            <p class="text-xs font-mono text-[#bc8cff] mb-3">v1.0.1 • Ubuntu, Debian, Fedora, Arch</p>
+            <p class="text-xs text-[#8b949e] mb-6 leading-relaxed">
+              Pacote universal AppImage independente de distribuição ou pacote Debian (.deb) nativo otimizado para integração com desktop Linux.
+            </p>
+
+            <ul class="space-y-2 text-xs text-[#8b949e] mb-6 font-mono">
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#bc8cff]"></i>
+                <span>Universal AppImage (Execute em qualquer distro)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#bc8cff]"></i>
+                <span>Pacote Debian / Ubuntu (.deb)</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <i data-lucide="check" class="w-3.5 h-3.5 text-[#bc8cff]"></i>
+                <span>Integração com terminal CLI inclusa</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Botões Linux -->
+          <div class="space-y-2.5">
+            <button data-download-target="dev-automation-kit-1.0.1.AppImage" class="open-modal-btn w-full bg-gradient-to-r from-[#8957e5] to-[#bc8cff] hover:from-[#794dd3] hover:to-[#a371f7] flex items-center justify-center gap-2 py-3 px-5 rounded-lg font-bold text-xs text-white shadow-md transition-all">
+              <i data-lucide="download" class="w-4 h-4"></i>
+              <span>Baixar Universal (.AppImage)</span>
+            </button>
+            <button data-download-target="dev-automation-kit_1.0.1_amd64.deb" class="open-modal-btn w-full bg-[#21262d] hover:bg-[#30363d] text-[#8b949e] hover:text-[#f0f6fc] border border-[rgba(240,246,252,0.1)] flex items-center justify-center gap-1.5 py-2 px-4 rounded-lg text-xs font-medium transition-colors">
+              <i data-lucide="package" class="w-3.5 h-3.5"></i>
+              <span>Pacote Debian / Ubuntu (.deb)</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       F. SEÇÃO DA EQUIPE / DESENVOLVEDORES (#equipe)
+       ========================================================================= -->
+  <section id="equipe" class="py-24 relative bg-[#0d1117] border-t border-[rgba(240,246,252,0.1)]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Cabeçalho da Equipe -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <span class="text-[#58a6ff] font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/30 inline-block mb-3">
+          Parceria Horizontal &amp; Open Source
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#f0f6fc] tracking-tight mb-4">
+          Quem Faz Acontecer
+        </h2>
+        <p class="text-[#8b949e] text-base leading-relaxed">
+          Projeto independente desenvolvido colaborativamente por 3 amigos desenvolvedores em parceria horizontal.
+        </p>
+      </div>
+
+      <!-- Grid com os 3 Integrantes -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        
+        <!-- Integrante 1: Alan Clímaco -->
+        <div class="glass-card p-6 flex flex-col items-center text-center group">
+          <div class="w-20 h-20 rounded-full bg-[#161b22] border-2 border-[#58a6ff]/40 p-1 mb-4 shadow-lg group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center">
+            <img src="https://avatars.githubusercontent.com/u/99739044?v=4" alt="Foto de perfil de Alan Clímaco" class="w-full h-full object-cover rounded-full" loading="lazy">
+          </div>
+          
+          <h3 class="text-lg font-bold text-[#f0f6fc] mb-1 group-hover:text-[#58a6ff] transition-colors">
+            Alan Clímaco
+          </h3>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30 mb-2">
+            Co-criador / Desenvolvedor
+          </span>
+
+          <div class="mt-auto flex items-center justify-center gap-2 pt-4">
+            <a href="https://alanclimaco.github.io/Portfolio/" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-[#58a6ff]/15 hover:bg-[#58a6ff]/25 border border-[#58a6ff]/30 text-[#58a6ff] hover:text-[#f0f6fc] text-xs font-semibold flex items-center gap-1.5 transition-all" title="Ver Portfólio de Alan Clímaco">
+              <i data-lucide="globe" class="w-4 h-4"></i>
+              <span>Portfólio</span>
+            </a>
+            <a href="https://github.com/AlanClimaco" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] border border-[rgba(240,246,252,0.15)] text-[#f0f6fc] text-xs font-semibold flex items-center gap-2 transition-all" title="Ver GitHub de Alan Clímaco">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Integrante 2: Amizael -->
+        <div class="glass-card p-6 flex flex-col items-center text-center group">
+          <div class="w-20 h-20 rounded-full bg-[#161b22] border-2 border-[#58a6ff]/40 p-1 mb-4 shadow-lg group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center">
+            <img src="https://avatars.githubusercontent.com/u/90802917?v=4" alt="Foto de perfil de Amizael" class="w-full h-full object-cover rounded-full" loading="lazy">
+          </div>
+          
+          <h3 class="text-lg font-bold text-[#f0f6fc] mb-1 group-hover:text-[#58a6ff] transition-colors">
+            Amizael
+          </h3>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30 mb-2">
+            Co-criador / Desenvolvedor
+          </span>
+
+          <div class="mt-auto flex items-center justify-center gap-2 pt-4">
+            <a href="https://github.com/Amizael" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] border border-[rgba(240,246,252,0.15)] text-[#f0f6fc] text-xs font-semibold flex items-center gap-2 transition-all" title="Ver GitHub de Amizael">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Integrante 3: Wernnon -->
+        <div class="glass-card p-6 flex flex-col items-center text-center group">
+          <div class="w-20 h-20 rounded-full bg-[#161b22] border-2 border-[#58a6ff]/40 p-1 mb-4 shadow-lg group-hover:scale-105 transition-transform overflow-hidden flex items-center justify-center">
+            <img src="https://avatars.githubusercontent.com/u/106777840?v=4" alt="Foto de perfil de Wernnon" class="w-full h-full object-cover rounded-full" loading="lazy">
+          </div>
+          
+          <h3 class="text-lg font-bold text-[#f0f6fc] mb-1 group-hover:text-[#58a6ff] transition-colors">
+            Wernnon
+          </h3>
+          <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-[#58a6ff]/15 text-[#58a6ff] border border-[#58a6ff]/30 mb-2">
+            Co-criador / Desenvolvedor
+          </span>
+
+          <div class="mt-auto flex items-center justify-center gap-2 pt-4">
+            <a href="https://github.com/wernnon" target="_blank" rel="noopener noreferrer" class="px-3.5 py-1.5 rounded-lg bg-[#21262d] hover:bg-[#30363d] border border-[rgba(240,246,252,0.15)] text-[#f0f6fc] text-xs font-semibold flex items-center gap-2 transition-all" title="Ver GitHub de Wernnon">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+              <span>GitHub</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       G. SEÇÃO DE FEEDBACK / CONTATO (#contato)
+       ========================================================================= -->
+  <section id="contato" class="py-24 relative bg-[#0d1117] border-t border-[rgba(240,246,252,0.1)]">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <span class="text-[#58a6ff] font-mono text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-[#58a6ff]/10 border border-[#58a6ff]/30 inline-block mb-3">
+          Canal Aberto &amp; Feedback
+        </span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-[#f0f6fc] tracking-tight mb-4">
+          Deixe um Recado
+        </h2>
+        <p class="text-[#8b949e] text-base leading-relaxed">
+          Tem alguma sugestão, dúvida, feedback sobre a ferramenta ou encontrou algum bug? Envie uma mensagem diretamente para a equipe de desenvolvimento!
+        </p>
+      </div>
+
+      <div class="glass-panel p-6 sm:p-10 rounded-2xl max-w-xl mx-auto border border-[rgba(240,246,252,0.15)] shadow-xl relative">
+        <form id="form-contato" class="space-y-4">
+          <div class="form-group">
+            <label for="name" class="block text-xs font-semibold text-[#f0f6fc] mb-1.5">Nome</label>
+            <input type="text" id="name" name="nome" placeholder="Seu nome ou apelido" required class="w-full bg-[#21262d] border border-[rgba(240,246,252,0.15)] rounded-xl px-4 py-2.5 text-sm text-[#f0f6fc] placeholder-[#6e7681] focus:outline-none focus:border-[#58a6ff] transition-colors">
+          </div>
+
+          <div class="form-group">
+            <label for="email" class="block text-xs font-semibold text-[#f0f6fc] mb-1.5">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu.email@exemplo.com" required class="w-full bg-[#21262d] border border-[rgba(240,246,252,0.15)] rounded-xl px-4 py-2.5 text-sm text-[#f0f6fc] placeholder-[#6e7681] focus:outline-none focus:border-[#58a6ff] transition-colors">
+          </div>
+
+          <div class="form-group">
+            <label for="message" class="block text-xs font-semibold text-[#f0f6fc] mb-1.5">Mensagem</label>
+            <textarea id="message" name="mensagem" rows="5" placeholder="Compartilhe seu feedback, reporte um problema ou envie uma sugestão..." required class="w-full bg-[#21262d] border border-[rgba(240,246,252,0.15)] rounded-xl px-4 py-2.5 text-sm text-[#f0f6fc] placeholder-[#6e7681] focus:outline-none focus:border-[#58a6ff] transition-colors resize-none"></textarea>
+          </div>
+
+          <button type="submit" class="submit-button glow-btn-primary w-full py-3 px-6 rounded-xl font-bold text-sm text-white flex items-center justify-center gap-2 shadow-lg transition-all">
+            <i data-lucide="send" class="w-4 h-4"></i>
+            <span>Enviar Mensagem</span>
+          </button>
+        </form>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================================================================
+       H. RODAPÉ (FOOTER)
+       ========================================================================= -->
+  <footer class="bg-[#0b0e14] border-t border-[rgba(240,246,252,0.1)] pt-14 pb-10 text-[#8b949e] text-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-8 pb-10 border-b border-[rgba(240,246,252,0.1)]">
+        
+        <!-- Coluna 1: Marca & Declaração de Privacidade -->
+        <div class="md:col-span-6 space-y-3.5">
+          <div class="flex items-center gap-2.5">
+            <div class="w-7 h-7 rounded-lg bg-[#161b22] border border-[rgba(240,246,252,0.15)] flex items-center justify-center text-[#58a6ff]">
+              <svg class="w-4 h-4 text-[#58a6ff]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="4 17 10 11 4 5"/>
+                <line x1="12" x2="20" y1="19" y2="19"/>
+              </svg>
+            </div>
+            <span class="font-bold text-[#f0f6fc] text-sm">Dev Automation Kit</span>
+            <span class="text-[11px] text-[#6e7681] font-mono">v1.0.1</span>
+          </div>
+          
+          <!-- Declaração de Privacidade Obrigatória -->
+          <div class="bg-[#161b22] border border-[rgba(240,246,252,0.1)] rounded-lg p-3 text-xs text-[#8b949e] leading-relaxed max-w-lg">
+            <span class="text-[#3fb950] font-semibold block mb-0.5 flex items-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5"></i>
+              Garantia de Privacidade
+            </span>
+            Nenhum dado, código ou métrica do seu computador é coletado ou enviado a servidores externos. Todo o processamento ocorre 100% em memória local.
+          </div>
+
+          <div class="text-[11px] text-[#6e7681] flex items-center gap-2">
+            <span>Distribuído sob a Licença MIT</span>
+            <span>•</span>
+            <span class="text-[#58a6ff]">Software Livre &amp; Independente</span>
+          </div>
+        </div>
+
+        <!-- Coluna 2: Navegação Rápida -->
+        <div class="md:col-span-3 space-y-2.5">
+          <h4 class="text-[#f0f6fc] font-semibold text-xs tracking-wider uppercase font-mono">Navegação</h4>
+          <ul class="space-y-1.5">
+            <li><a href="#sobre" class="hover:text-[#58a6ff] transition-colors">Visão Geral</a></li>
+            <li><a href="#recursos" class="hover:text-[#58a6ff] transition-colors">Recursos &amp; Diagnósticos</a></li>
+            <li><a href="#temas" class="hover:text-[#58a6ff] transition-colors">Galeria de Temas</a></li>
+            <li><a href="#download" class="hover:text-[#58a6ff] transition-colors">Instaladores Desktop</a></li>
+            <li><a href="#equipe" class="hover:text-[#58a6ff] transition-colors">Desenvolvedores</a></li>
+            <li><a href="#contato" class="hover:text-[#58a6ff] transition-colors">Deixe um Recado</a></li>
+          </ul>
+        </div>
+
+        <!-- Coluna 3: Links da Comunidade -->
+        <div class="md:col-span-3 space-y-2.5">
+          <h4 class="text-[#f0f6fc] font-semibold text-xs tracking-wider uppercase font-mono">Comunidade</h4>
+          <ul class="space-y-1.5">
+            <li>
+              <a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
+                <span>Repositório GitHub</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/AlanClimaco/dev-automation-kit-web/issues" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
+                <i data-lucide="bug" class="w-3.5 h-3.5"></i>
+                <span>Reportar Bug / Sugestão</span>
+              </a>
+            </li>
+            <li>
+              <a href="https://github.com/AlanClimaco/dev-automation-kit-web/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
+                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                <span>Licença MIT</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!-- Copyright -->
+      <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[#6e7681] gap-3">
+        <p>© 2026 Dev Automation Kit. Criado por Amizael, Alan Clímaco e Wernnon.</p>
+        <a href="#" class="hover:text-[#f0f6fc] transition-colors flex items-center gap-1">
+          <span>Voltar ao topo</span>
+          <i data-lucide="arrow-up" class="w-3 h-3"></i>
+        </a>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       MODAL DE DOWNLOAD & COLABORAÇÃO (ESTILO WINRAR / ITCH.IO)
+       ========================================================================= -->
+  <div id="download-modal" class="inactive fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/80 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    
+    <div class="modal-dialog w-full max-w-lg p-6 sm:p-7 relative text-[#f0f6fc]">
+      
+      <!-- Botão Fechar -->
+      <button id="close-modal-btn" type="button" class="absolute top-4 right-4 text-[#8b949e] hover:text-[#f0f6fc] p-1.5 rounded-lg hover:bg-[#21262d] transition-colors" aria-label="Fechar Janela">
+        <i data-lucide="x" class="w-5 h-5"></i>
+      </button>
+
+      <!-- Conteúdo do Modal: Estado Normal -->
+      <div id="modal-content-normal">
+        
+        <!-- Header do Modal -->
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-[#58a6ff]/15 border border-[#58a6ff]/30 flex items-center justify-center text-[#58a6ff]">
+            <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+          </div>
+          <div>
+            <h3 id="modal-title" class="text-lg font-bold text-[#f0f6fc]">Apoie o Dev Automation Kit</h3>
+            <p class="text-xs text-[#58a6ff] font-mono">Software 100% Gratuito e Independente</p>
+          </div>
+        </div>
+
+        <!-- Mensagem Persuasiva Solicitada -->
+        <p class="text-xs text-[#8b949e] leading-relaxed mb-4">
+          Este software é gratuito e independente. Você pode fazer o download diretamente ou contribuir com qualquer valor para manter o projeto ativo!
+        </p>
+
+        <!-- Arquivo Selecionado -->
+        <div class="mb-4 bg-[#21262d] border border-[rgba(240,246,252,0.1)] rounded-lg p-2.5 flex items-center justify-between text-xs">
+          <span class="text-[#8b949e] flex items-center gap-1.5">
+            <i data-lucide="file-down" class="w-3.5 h-3.5 text-[#58a6ff]"></i>
+            Arquivo selecionado:
+          </span>
+          <span id="modal-selected-file" class="font-mono text-[#58a6ff] font-semibold">DevAutomationKit-Setup-1.0.1.exe</span>
+        </div>
+
+        <!-- Área de Doação Pix / QR Code -->
+        <div class="bg-[#161b22] p-4 rounded-xl border border-[rgba(240,246,252,0.1)] mb-5">
+          <div class="text-xs font-semibold text-[#f0f6fc] flex items-center justify-between mb-3">
+            <span class="flex items-center gap-1.5 text-[#3fb950]">
+              <i data-lucide="qr-code" class="w-4 h-4"></i>
+              Contribua via Pix (Qualquer Valor)
+            </span>
+            <span class="text-[10px] text-[#6e7681] font-mono">Chave Aleatória</span>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center gap-4">
+            
+            <!-- QR Code em SVG Otimizado -->
+            <div class="w-24 h-24 bg-white p-1.5 rounded-lg shadow-md flex items-center justify-center shrink-0">
+              <svg class="w-full h-full text-slate-900" viewBox="0 0 100 100" fill="currentColor">
+                <rect x="5" y="5" width="28" height="28" fill="#0d1117"/>
+                <rect x="9" y="9" width="20" height="20" fill="white"/>
+                <rect x="13" y="13" width="12" height="12" fill="#0d1117"/>
+                
+                <rect x="67" y="5" width="28" height="28" fill="#0d1117"/>
+                <rect x="71" y="9" width="20" height="20" fill="white"/>
+                <rect x="75" y="13" width="12" height="12" fill="#0d1117"/>
+
+                <rect x="5" y="67" width="28" height="28" fill="#0d1117"/>
+                <rect x="9" y="71" width="20" height="20" fill="white"/>
+                <rect x="13" y="75" width="12" height="12" fill="#0d1117"/>
+
+                <rect x="38" y="10" width="8" height="8" fill="#0d1117"/>
+                <rect x="50" y="10" width="8" height="8" fill="#0d1117"/>
+                <rect x="38" y="24" width="6" height="6" fill="#0d1117"/>
+                <rect x="48" y="24" width="12" height="6" fill="#0d1117"/>
+                
+                <rect x="10" y="38" width="8" height="8" fill="#0d1117"/>
+                <rect x="24" y="38" width="16" height="8" fill="#0d1117"/>
+                <rect x="45" y="38" width="10" height="10" fill="#0d1117"/>
+                <rect x="60" y="38" width="8" height="8" fill="#0d1117"/>
+                <rect x="75" y="38" width="18" height="8" fill="#0d1117"/>
+
+                <rect x="38" y="52" width="14" height="10" fill="#0d1117"/>
+                <rect x="56" y="52" width="10" height="8" fill="#0d1117"/>
+                <rect x="70" y="52" width="16" height="6" fill="#0d1117"/>
+
+                <rect x="38" y="68" width="8" height="12" fill="#0d1117"/>
+                <rect x="50" y="72" width="16" height="8" fill="#0d1117"/>
+                <rect x="70" y="66" width="12" height="16" fill="#0d1117"/>
+                <rect x="85" y="72" width="8" height="16" fill="#0d1117"/>
+              </svg>
+            </div>
+
+            <!-- Campo Copia e Cola -->
+            <div class="flex-1 w-full space-y-2">
+              <span class="text-[11px] text-[#8b949e] block">Chave Pix Copia e Cola:</span>
+              <div class="flex items-center gap-2">
+                <input id="pix-key-input" type="text" readonly value="00020126580014br.gov.bcb.pix0136devautomationkit-apoio-pix@community.dev5204000053039865802BR5920DevAutomationKitTeam6009Sao Paulo62070503***6304E8A2" class="w-full bg-[#0d1117] border border-[rgba(240,246,252,0.15)] rounded-lg px-2.5 py-1.5 text-xs font-mono text-[#f0f6fc] focus:outline-none select-all truncate">
+                <button id="copy-pix-btn" type="button" class="shrink-0 px-2.5 py-1.5 rounded-lg bg-[#58a6ff]/15 hover:bg-[#58a6ff]/25 border border-[#58a6ff]/30 text-[#58a6ff] hover:text-[#f0f6fc] text-xs font-semibold flex items-center gap-1 transition-all" title="Copiar chave Pix">
+                  <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+                  <span id="copy-pix-text">Copiar</span>
+                </button>
+              </div>
+              <p class="text-[10px] text-[#6e7681]">
+                Favorecido: Equipe Dev Automation Kit • Manutenção do Projeto
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Dois Botões do Modal -->
+        <div class="flex flex-col gap-2.5">
+          <button id="btn-modal-support" type="button" class="w-full glow-btn-primary flex items-center justify-center gap-2 py-3 px-5 rounded-lg font-bold text-xs shadow-md">
+            <i data-lucide="heart" class="w-4 h-4 text-rose-300 fill-rose-300"></i>
+            <span>Já apoiei / Quero apoiar agora</span>
+          </button>
+
+          <button id="btn-modal-free-download" type="button" class="w-full text-center py-1.5 px-3 rounded text-xs font-medium text-[#8b949e] hover:text-[#58a6ff] transition-colors">
+            Continuar para o Download Gratuito
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Conteúdo do Modal: Estado de Agradecimento -->
+      <div id="modal-content-thankyou" class="hidden text-center py-5">
+        <div class="w-14 h-14 rounded-full bg-[#2ea043]/15 border border-[#2ea043]/30 text-[#3fb950] mx-auto flex items-center justify-center mb-3">
+          <i data-lucide="check-circle" class="w-7 h-7"></i>
+        </div>
+        <h4 class="text-xl font-bold text-[#f0f6fc] mb-1.5">Muito Obrigado pelo Apoio!</h4>
+        <p class="text-xs text-[#8b949e] max-w-sm mx-auto mb-4">
+          Sua contribuição fortalece o ecossistema open-source e financia o desenvolvimento contínuo de novos diagnósticos.
+        </p>
+        <p class="text-xs text-[#58a6ff] font-mono mb-5">
+          Seu download começará automaticamente em instantes...
+        </p>
+        <button id="btn-thankyou-close" type="button" class="glow-btn-primary px-5 py-2 rounded-lg text-xs font-bold">
+          Fechar Janela
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TOAST DE NOTIFICAÇÃO -->
+  <div id="toast" class="px-4 py-2.5 rounded-lg flex items-center gap-2.5 text-xs text-[#f0f6fc]">
+    <div class="w-5 h-5 rounded bg-[#2ea043]/20 text-[#3fb950] flex items-center justify-center">
+      <i data-lucide="check" class="w-3.5 h-3.5"></i>
+    </div>
+    <span id="toast-message">Chave Pix copiada com sucesso!</span>
+  </div>
+
+  <!-- MODAL DE STATUS DE ENVIO (FORMSPREE FEEDBACK) -->
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal-status glass-panel" id="modal-status">
+    <button class="modal-close" id="modal-close" aria-label="Fechar">&times;</button>
+    <div class="modal-icon flex justify-center mb-3">
+      <svg class="icon-success w-14 h-14 text-[#2ea043]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+      </svg>
+      <svg class="icon-error w-14 h-14 text-[#f85149]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <line x1="12" y1="8" x2="12" y2="12"></line>
+        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+      </svg>
+    </div>
+    <p class="modal-message text-sm sm:text-base font-semibold text-[#f0f6fc]" id="modal-message"></p>
+  </div>
+
+  <!-- Script Principal -->
+  <script src="script.js"></script>
+</body>
+</html>

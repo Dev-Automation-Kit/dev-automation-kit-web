@@ -1,0 +1,558 @@
+@charset "UTF-8";
+
+/* ==========================================================================
+   DEV AUTOMATION KIT — DESIGN SYSTEM & VISUAL IDENTITY
+   Refatorado para 100% de consistência com o Design System Oficial
+   ========================================================================== */
+
+:root {
+  /* Fundos & Telas */
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --bg-tertiary: #21262d;
+
+  /* Vidro (Glassmorphism) */
+  --bg-glass: rgba(22, 27, 34, 0.75);
+  --bg-glass-card: rgba(30, 36, 46, 0.55);
+  --bg-glass-card-hover: rgba(40, 48, 62, 0.7);
+
+  /* Bordas Especulares & Divisores */
+  --border-subtle: rgba(240, 246, 252, 0.1);
+  --border-card: rgba(240, 246, 252, 0.15);
+  --border-active: #58a6ff;
+
+  /* Tipografia */
+  --text-primary: #f0f6fc;
+  --text-secondary: #8b949e;
+  --text-muted: #6e7681;
+  --text-link: #58a6ff;
+
+  /* Acentos e Ações */
+  --accent-blue: #58a6ff;
+  --accent-blue-hover: #79c0ff;
+  --accent-green: #2ea043;
+  --accent-green-hover: #3fb950;
+  --accent-purple: #bc8cff;
+  --accent-amber: #d29922;
+  --accent-red: #f85149;
+
+  /* Sombras & Brilhos */
+  --shadow-subtle: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-glow-blue: 0 0 20px rgba(88, 166, 255, 0.2);
+  --shadow-glow-green: 0 0 20px rgba(46, 160, 67, 0.25);
+  --shadow-glow-purple: 0 0 24px rgba(188, 140, 255, 0.25);
+
+  /* Arredondamento */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-full: 9999px;
+}
+
+/* Base & Smooth Scroll */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 0%, #161f30 0%, #0d1117 70%),
+    radial-gradient(circle at 85% 25%, rgba(88, 166, 255, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 15% 75%, rgba(188, 140, 255, 0.06) 0%, transparent 50%);
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--bg-tertiary);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* ==========================================================================
+   GLASSMORPHISM & PANELS OFICIAIS
+   ========================================================================== */
+
+.glass-panel {
+  background: var(--bg-glass);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+}
+
+.glass-nav {
+  background: rgba(13, 17, 23, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.glass-card {
+  background: var(--bg-glass-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-card:hover {
+  background: var(--bg-glass-card-hover);
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-card), var(--shadow-glow-blue);
+  transform: translateY(-2px);
+}
+
+/* Gradientes e Textos Luminosos */
+.text-gradient-blue-purple {
+  background: linear-gradient(135deg, #58a6ff 0%, #bc8cff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.text-gradient-blue-green {
+  background: linear-gradient(135deg, #58a6ff 0%, #3fb950 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Botões com Brilho do Design System */
+.glow-btn-primary {
+  background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(46, 160, 67, 0.35);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.glow-btn-primary:hover {
+  background: linear-gradient(135deg, #2ea043 0%, #3fb950 100%);
+  box-shadow: var(--shadow-glow-green), 0 6px 24px rgba(46, 160, 67, 0.5);
+  transform: translateY(-1px);
+}
+
+.glow-btn-green {
+  background: linear-gradient(135deg, #238636 0%, #2ea043 100%);
+  box-shadow: 0 4px 16px rgba(46, 160, 67, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  border-radius: var(--radius-md);
+  transition: all 0.2s ease;
+}
+
+.glow-btn-green:hover {
+  background: linear-gradient(135deg, #2ea043 0%, #3fb950 100%);
+  box-shadow: 0 6px 24px rgba(46, 160, 67, 0.5);
+  transform: translateY(-1px);
+}
+
+/* Janela Mockup Desktop */
+.mockup-window {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card), 0 25px 60px -15px rgba(0, 0, 0, 0.8), var(--shadow-glow-blue);
+}
+
+/* Chip de Projeto Ativo (Topbar Desktop) */
+.project-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+}
+
+.project-chip.active {
+  background: rgba(46, 160, 67, 0.12);
+  border-color: rgba(46, 160, 67, 0.35);
+  color: var(--text-primary);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px rgba(46, 160, 67, 0.6);
+}
+
+/* Abas do App Desktop (Contexto IA vs Diagnósticos) */
+.app-nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(13, 17, 23, 0.75);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.nav-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.nav-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+.nav-tab.active {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  border-color: var(--border-active);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+/* Árvore de Arquivos VS Code */
+.tree-item {
+  position: relative;
+  transition: background-color 0.15s ease;
+  border-radius: var(--radius-sm);
+}
+
+.tree-item:hover {
+  background-color: rgba(240, 246, 252, 0.05);
+}
+
+/* ==========================================================================
+   TEMAS DA PRÉVIA INTERATIVA (#temas)
+   ========================================================================== */
+
+/* 1. Tema Dark Glass (Padrão Oficial) */
+.theme-container.theme-dark-glass {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-card), var(--shadow-glow-blue);
+  color: var(--text-primary);
+}
+
+.theme-container.theme-dark-glass .theme-header {
+  background: var(--bg-secondary);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+}
+
+.theme-container.theme-dark-glass .theme-sidebar {
+  background: rgba(13, 17, 23, 0.85);
+  border-right: 1px solid var(--border-subtle);
+}
+
+.theme-container.theme-dark-glass .theme-badge {
+  background: rgba(88, 166, 255, 0.15);
+  color: var(--accent-blue);
+  border: 1px solid rgba(88, 166, 255, 0.3);
+}
+
+.theme-container.theme-dark-glass .theme-btn {
+  background: linear-gradient(135deg, #1f6feb, #58a6ff);
+  color: #ffffff;
+  box-shadow: var(--shadow-glow-blue);
+}
+
+/* 2. Tema Windows 7 / Frutiger Aero */
+.theme-container.theme-aero {
+  background: linear-gradient(180deg, #d3e8f8 0%, #a4cff2 30%, #5ba7e5 60%, #308ad4 100%);
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  border-radius: var(--radius-lg);
+  box-shadow: 
+    0 25px 60px rgba(0, 80, 160, 0.35),
+    inset 0 1px 2px rgba(255, 255, 255, 0.9),
+    inset 0 -1px 2px rgba(0, 50, 120, 0.3);
+  position: relative;
+  overflow: hidden;
+  color: #0f172a;
+}
+
+.theme-container.theme-aero::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 48%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.12) 80%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 5;
+}
+
+.theme-container.theme-aero .theme-header {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.75) 0%, rgba(190, 222, 245, 0.65) 100%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 2px 4px rgba(0, 40, 90, 0.1);
+  color: #0c4a6e;
+}
+
+.theme-container.theme-aero .theme-content-area {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(8px);
+  color: #1e293b;
+  border-radius: var(--radius-md);
+  margin: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.theme-container.theme-aero .theme-sidebar {
+  background: rgba(238, 246, 254, 0.92);
+  border-right: 1px solid #c7ddf2;
+}
+
+.theme-container.theme-aero .theme-badge {
+  background: linear-gradient(180deg, #f0fdf4 0%, #bbf7d0 100%);
+  color: #166534;
+  border: 1px solid #86efac;
+}
+
+.theme-container.theme-aero .theme-btn {
+  background: linear-gradient(180deg, #53c5f8 0%, #299de8 50%, #157ac8 51%, #1f8be0 100%);
+  color: #ffffff;
+  border: 1px solid #0f5c99;
+  border-radius: var(--radius-full);
+  box-shadow: 0 2px 5px rgba(0, 60, 130, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  text-shadow: 0 1px 2px rgba(0, 40, 80, 0.6);
+}
+
+.theme-container.theme-aero .theme-tag {
+  background: #e0f2fe;
+  color: #0369a1;
+  border: 1px solid #bae6fd;
+}
+
+/* 3. Tema Cyberpunk / Neo-Futurista */
+.theme-container.theme-cyberpunk {
+  background: #090610;
+  border: 2px solid #06b6d4;
+  box-shadow: 
+    0 0 25px rgba(6, 182, 212, 0.35),
+    0 0 45px rgba(236, 72, 153, 0.25),
+    inset 0 0 20px rgba(6, 182, 212, 0.15);
+  position: relative;
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+}
+
+.theme-container.theme-cyberpunk::after {
+  content: " ";
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%);
+  background-size: 100% 4px;
+  z-index: 10;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.theme-container.theme-cyberpunk .theme-header {
+  background: #110d22;
+  border-bottom: 2px solid #ec4899;
+  color: #f43f5e;
+}
+
+.theme-container.theme-cyberpunk .theme-sidebar {
+  background: #0c0817;
+  border-right: 1px solid rgba(6, 182, 212, 0.3);
+}
+
+.theme-container.theme-cyberpunk .theme-badge {
+  background: rgba(236, 72, 153, 0.18);
+  color: #f43f5e;
+  border: 1px solid #f43f5e;
+  border-radius: 2px;
+}
+
+.theme-container.theme-cyberpunk .theme-btn {
+  background: #f43f5e;
+  color: #090610;
+  font-weight: 800;
+  border: 1px solid #f43f5e;
+  box-shadow: 0 0 15px rgba(244, 63, 94, 0.6);
+  border-radius: 2px;
+  text-transform: uppercase;
+}
+
+.theme-container.theme-cyberpunk .theme-tag {
+  background: rgba(6, 182, 212, 0.15);
+  color: #22d3ee;
+  border: 1px solid #06b6d4;
+  border-radius: 2px;
+}
+
+/* ==========================================================================
+   MODAL DE DOWNLOAD & DOAÇÃO (WinRAR / Itch.io Style)
+   ========================================================================== */
+#download-modal {
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+}
+
+#download-modal.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+#download-modal.inactive {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.modal-dialog {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card), 0 25px 60px rgba(0, 0, 0, 0.8);
+}
+
+#download-modal.active .modal-dialog {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+#download-modal.inactive .modal-dialog {
+  transform: translateY(16px) scale(0.97);
+  opacity: 0;
+}
+
+/* Toast Notification */
+#toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-active);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card), var(--shadow-glow-blue);
+}
+
+#toast.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ==========================================================================
+   MODAL DE STATUS DE ENVIO / FORMSPREE FEEDBACK & SCROLLSPY
+   ========================================================================== */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-status {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -40%);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 30px 40px;
+  z-index: 2001;
+  text-align: center;
+  min-width: 320px;
+  max-width: 480px;
+  width: 90%;
+  opacity: 0;
+  pointer-events: none;
+  box-shadow: var(--shadow-card), 0 20px 50px rgba(0, 0, 0, 0.7);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-close {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.8rem;
+  line-height: 1;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.2s, color 0.2s;
+}
+
+.modal-close:hover {
+  opacity: 1;
+  color: var(--text-primary);
+}
+
+.modal-backdrop.show,
+.modal-status.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.modal-status.show {
+  transform: translate(-50%, -50%);
+}
+
+.modal-icon .icon-success,
+.modal-icon .icon-error {
+  display: none;
+}
+
+.modal-status.success .icon-success {
+  display: block;
+}
+
+.modal-status.error .icon-error {
+  display: block;
+}
+
+/* ScrollSpy Nav Link Active */
+.nav-link.active {
+  color: #ffffff !important;
+  background-color: var(--bg-tertiary);
+  border: 1px solid var(--border-active);
+  box-shadow: var(--shadow-glow-blue);
+}
