@@ -1,0 +1,7 @@
+dist/
+downloads/
+*.exe
+*.AppImage
+*.deb
+*.zip
+*.tar.gz

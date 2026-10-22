@@ -1,35 +1,34 @@
-# Dev Automation Kit — site web
+# Dev Automation Kit Web
 
-Este repositório contém a página de apresentação e a documentação web do Dev Automation Kit. O aplicativo desktop é um projeto separado; seu código não está incluído aqui. A janela interativa na página inicial é uma demonstração com dados simulados.
+Site oficial, vitrine de divulgação e portal de documentação do Dev Automation Kit.
 
-## Tecnologias e serviços
+## O que é o Dev Automation Kit
 
-O site usa HTML, CSS e JavaScript sem processo de build. Tailwind CSS e Lucide são carregados por CDN, e as fontes Inter e JetBrains Mono pelo Google Fonts. Os avatares vêm do GitHub. O formulário de contato envia os dados ao Formspree. Esses recursos dependem de serviços externos; isso é independente do processamento anunciado para o aplicativo desktop.
+O Dev Automation Kit é uma suíte de produtividade e diagnósticos locais desenvolvida para otimizar o fluxo de trabalho de desenvolvedores na era do desenvolvimento assistido por Inteligência Artificial (como Claude, ChatGPT, Gemini e Cursor).
 
-## Execução local
+O software funciona como um aplicativo desktop multiplataforma (Windows e Linux) e como motor CLI independente, permitindo:
 
-Na raiz do repositório, execute:
+1. **Gerar e Otimizar Contexto para IA:** Seleção, compilação, sanitização e fracionamento de repositórios em prompts limpos e otimizados em tokens.
+2. **Diagnósticos Locais de Código:** Suíte automatizada que verifica a saúde do repositório (detector de clones, auditor estático de antipadrões JS/TS, validador de arquivos `.env`, auditor de dependências fantasma, mapeador de tamanho e verificador de links).
+3. **Privacidade e Processamento Local:** Operação 100% offline, sem envio de código ou telemetria para servidores externos.
 
-```sh
-python3 -m http.server 8080
-```
+## Sobre este Repositório
 
-Acesse <http://localhost:8080/>. A conexão com a internet é necessária para carregar os recursos externos.
+Este repositório contém a interface web oficial e a central de documentação técnica do projeto. Ele funciona de forma independente do código-fonte do aplicativo desktop para garantir a segurança da base de código, servindo como o ponto público de acesso para:
 
-## Arquivos
+- Apresentação das funcionalidades e recursos da suíte.
+- Demonstração dos temas de interface disponíveis.
+- Central de downloads dos instaladores executáveis para Windows e Linux.
+- Documentação técnica sobre a arquitetura e operação do sistema.
 
-- `index.html`: apresentação, demonstração, downloads, equipe e contato.
-- `docs.html`: documentação e sumário de tópicos.
-- `styles.css`: estilos compartilhados, da demonstração e das páginas.
-- `script.js`: navegação e interações das duas páginas.
-- `README.md`: instruções deste repositório.
+## Equipe e Co-criadores
 
-## Edição e publicação
+O Dev Automation Kit é desenvolvido em parceria horizontal por:
 
-Edite `index.html` para alterar a apresentação e `docs.html` para atualizar a documentação. Os estilos estão em `styles.css`; preserve as regras do mockup ao alterar a aparência das páginas. As interações são implementadas em `script.js`.
+- **Alan Clímaco:** Co-criador / Desenvolvedor (https://github.com/AlanClimaco)
+- **Amizael:** Co-criador / Desenvolvedor (https://github.com/Amizael)
+- **Wernnon:** Desenvolvedor (https://github.com/wernnon)
 
-Para publicar no GitHub Pages, envie os arquivos para o repositório e, em **Settings > Pages**, selecione **Deploy from a branch**, a branch desejada e a pasta raiz. Salve a configuração e consulte o endereço exibido pelo GitHub.
+## Licença
 
-## Créditos e licença
-
-A página apresenta Alan Clímaco, Amizael e Wernnon como co-criadores e desenvolvedores. Não há arquivo de licença neste repositório; confirme os termos de uso na fonte oficial antes de redistribuir o projeto.
+Distribuído sob a Licença MIT.

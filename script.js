@@ -42,170 +42,98 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================================================================
-     2. ABAS DO MOCKUP DESKTOP (CONTEXTO IA VS DIAGNÓSTICOS)
+     PRÉVIA INTERATIVA DOS TEMAS OFICIAIS E DO ROADMAP
      ========================================================================= */
-  const heroTabContexto = document.getElementById('hero-tab-contexto');
-  const heroTabDiagnosticos = document.getElementById('hero-tab-diagnosticos');
-  const heroPanelContexto = document.getElementById('hero-panel-contexto');
-  const heroPanelDiagnosticos = document.getElementById('hero-panel-diagnosticos');
-
-  if (heroTabContexto && heroTabDiagnosticos && heroPanelContexto && heroPanelDiagnosticos) {
-    heroTabContexto.addEventListener('click', () => {
-      heroTabContexto.classList.add('active');
-      heroTabDiagnosticos.classList.remove('active');
-      heroPanelContexto.classList.remove('hidden');
-      heroPanelDiagnosticos.classList.add('hidden');
-    });
-
-    heroTabDiagnosticos.addEventListener('click', () => {
-      heroTabDiagnosticos.classList.add('active');
-      heroTabContexto.classList.remove('active');
-      heroPanelDiagnosticos.classList.remove('hidden');
-      heroPanelContexto.classList.add('hidden');
-    });
-  }
-
-  /* =========================================================================
-     3. SIMULAÇÃO DE GERAÇÃO DE CONTEXTO NO HERO
-     ========================================================================= */
-  const mockBtnGerar = document.getElementById('mock-btn-gerar');
-  const mockResultBanner = document.getElementById('mock-result-banner');
-  const mockBtnCopiar = document.getElementById('mock-btn-copiar');
-  const mockBtnExplorador = document.getElementById('mock-btn-explorador');
-
-  if (mockBtnGerar && mockResultBanner) {
-    mockBtnGerar.addEventListener('click', () => {
-      mockBtnGerar.classList.add('opacity-75');
-      showToast('Compilando arquivos selecionados em gerados/... ⚡');
-
-      setTimeout(() => {
-        mockBtnGerar.classList.remove('opacity-75');
-        mockResultBanner.classList.remove('hidden');
-        showToast('Contexto compilado com sucesso! Pronto para colar.');
-      }, 600);
-    });
-  }
-
-  if (mockBtnCopiar) {
-    mockBtnCopiar.addEventListener('click', async () => {
-      const sampleExport = `// DEV AUTOMATION KIT - CONTEXTO GERADO (ecommerce-core-ts)
-// Total de Arquivos: 14 | Tokens: ~35.700
-// Gerado localmente com SafeGuard Ativo.
-=====================================================
-[ARQUIVO: src/index.ts]
-...
-[ARQUIVO: src/services/auth.ts]
-...
-[ARQUIVO: src/services/payment.ts]
-...`;
-      try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(sampleExport);
-        }
-        showToast('Contexto compilado copiado para a Área de Transferência! 📋');
-      } catch (err) {
-        showToast('Contexto preparado para cópia.');
-      }
-    });
-  }
-
-  if (mockBtnExplorador) {
-    mockBtnExplorador.addEventListener('click', () => {
-      showToast('Abrindo pasta nativa: gerados/ecommerce-core-ts/ 📁');
-    });
-  }
-
-  /* =========================================================================
-     4. ÁRVORE DE ARQUIVOS INTERATIVA (CÁLCULO DINÂMICO DE TOKENS)
-     ========================================================================= */
-  const treeCheckboxes = document.querySelectorAll('#sobre input[type="checkbox"]');
-  const mockFilesCount = document.getElementById('mock-files-count');
-  const mockBytesSize = document.getElementById('mock-bytes-size');
-  const mockTokensCount = document.getElementById('mock-tokens-count');
-
-  if (treeCheckboxes.length > 0) {
-    treeCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', () => {
-        const checkedCount = Array.from(treeCheckboxes).filter(cb => cb.checked).length;
-        if (mockFilesCount) mockFilesCount.textContent = checkedCount;
-
-        // Atualização proporcional de métricas
-        const baseBytes = checkedCount * 10.2;
-        const baseTokens = Math.round(checkedCount * 2550);
-        
-        if (mockBytesSize) mockBytesSize.textContent = `${baseBytes.toFixed(1)} KB`;
-        if (mockTokensCount) mockTokensCount.textContent = `~${baseTokens.toLocaleString('pt-BR')}`;
-      });
-    });
-  }
-
-  /* =========================================================================
-     5. SELETOR DE TEMAS INTERATIVO (#temas)
-     ========================================================================= */
-  const themeButtons = document.querySelectorAll('.theme-switch-btn');
-  const themeCard = document.getElementById('theme-preview-card');
-  const themePreviewTitle = document.getElementById('theme-preview-title');
-  const themeBadgeLabel = document.getElementById('theme-badge-label');
-  const themePreviewHeading = document.getElementById('theme-preview-heading');
-  const themePreviewDesc = document.getElementById('theme-preview-desc');
-  const themeTagElement = document.getElementById('theme-tag-element');
-
+  const themeButtons = Array.from(document.querySelectorAll('.theme-switch-btn'));
+  const themePreview = document.getElementById('theme-preview-card');
+  const themeTitle = document.getElementById('theme-preview-title');
+  const themeHeading = document.getElementById('theme-preview-heading');
+  const themeDescription = document.getElementById('theme-preview-desc');
+  const themeStatus = document.getElementById('theme-badge-label');
+  const themeTag = document.getElementById('theme-tag-element');
   const themeConfig = {
     'dark-glass': {
       className: 'theme-dark-glass',
       title: 'Dev Automation Kit — [Dark Glass Mode]',
-      badge: 'Dark Glass UI',
       heading: 'Diagnóstico em Andamento',
-      tag: 'Engine v1.0.1',
-      desc: 'O estilo Dark Glass oferece contraste ideal para programar em ambientes com baixa luminosidade, reduzindo a fadiga visual com camadas translúcidas e destaques azuis e roxos.'
+      description: 'O estilo Dark Glass oferece contraste ideal para programar em ambientes com baixa luminosidade, reduzindo a fadiga visual com camadas translúcidas e destaques azuis e roxos.',
+      status: 'Dark Glass UI',
+      tag: 'Engine v0.1.3-alpha'
     },
-    'aero': {
+    light: {
+      className: 'theme-light',
+      title: 'Dev Automation Kit — [Light Mode]',
+      heading: 'Clareza em cada diagnóstico',
+      description: 'Light oferece superfícies claras e alto contraste para analisar projetos em ambientes iluminados.',
+      status: 'Light UI',
+      tag: 'Engine v0.1.3-alpha'
+    },
+    aero: {
       className: 'theme-aero',
       title: 'Dev Automation Kit — [Windows Aero Glass]',
-      badge: 'Frutiger Aero',
       heading: 'Otimizador de Desempenho & Tokens',
+      description: 'Inspirado na icônica era Frutiger Aero do Windows 7: transparências cristalinas, brilhos especulares, reflexos aquáticos e a sensação nostálgica e polida de software desktop clássico.',
+      status: 'Frutiger Aero · Em breve',
       tag: 'Aero Glass 2007-2012',
-      desc: 'Inspirado na icônica era Frutiger Aero do Windows 7: transparências cristalinas, brilhos especulares, reflexos aquáticos e a sensação nostálgica e polida de software desktop clássico.'
+      roadmap: true
     },
-    'cyberpunk': {
+    cyber: {
       className: 'theme-cyberpunk',
-      title: 'DEV_AUTOMATION_KIT // [CYBER_NEON_v1.0.1]',
-      badge: 'CYBERPUNK HUD',
+      title: 'DEV_AUTOMATION_KIT // [CYBER_NEON_v0.1.3-alpha]',
       heading: 'SYSTEM_DIAGNOSTICS_ACTIVE',
+      description: 'Paleta agressiva de alto contraste com ciano elétrico e magenta neon, linhas de varredura CRT e visual utilitário terminal de ficção científica.',
+      status: 'CYBERPUNK HUD · Em desenvolvimento',
       tag: 'KERNEL://SYNAPSE_v9',
-      desc: 'Paleta agressiva de alto contraste com ciano elétrico e magenta neon, linhas de varredura CRT e visual utilitário terminal de ficção científica.'
+      roadmap: true
     }
   };
 
-  themeButtons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const selectedTheme = btn.getAttribute('data-theme');
-      if (!themeConfig[selectedTheme] || !themeCard) return;
+  if (themePreview && themeButtons.length) {
+    const themeClasses = Object.values(themeConfig).map(theme => theme.className);
 
-      themeButtons.forEach(b => {
-        b.classList.remove('active', 'bg-[#21262d]', 'text-[#f0f6fc]', 'border', 'border-[#58a6ff]');
-        b.classList.add('text-[#8b949e]');
+    function selectTheme(button) {
+      const theme = themeConfig[button.getAttribute('data-theme')];
+      if (!theme) return;
+
+      themeButtons.forEach(tab => {
+        const selected = tab === button;
+        tab.classList.toggle('active', selected);
+        tab.setAttribute('aria-selected', String(selected));
+        tab.setAttribute('tabindex', selected ? '0' : '-1');
       });
-
-      btn.classList.add('active', 'bg-[#21262d]', 'text-[#f0f6fc]', 'border', 'border-[#58a6ff]');
-      btn.classList.remove('text-[#8b949e]');
-
-      themeCard.className = `theme-container ${themeConfig[selectedTheme].className} rounded-xl overflow-hidden transition-all duration-300 p-1`;
-
-      if (themePreviewTitle) themePreviewTitle.textContent = themeConfig[selectedTheme].title;
-      if (themeBadgeLabel) themeBadgeLabel.textContent = themeConfig[selectedTheme].badge;
-      if (themePreviewHeading) themePreviewHeading.textContent = themeConfig[selectedTheme].heading;
-      if (themePreviewDesc) themePreviewDesc.textContent = themeConfig[selectedTheme].desc;
-      if (themeTagElement) themeTagElement.textContent = themeConfig[selectedTheme].tag;
-
-      if (window.lucide && typeof window.lucide.createIcons === 'function') {
-        window.lucide.createIcons();
+      themePreview.classList.remove(...themeClasses);
+      themePreview.classList.add(theme.className);
+      themePreview.setAttribute('aria-labelledby', button.id);
+      if (themeTitle) themeTitle.textContent = theme.title;
+      if (themeHeading) themeHeading.textContent = theme.heading;
+      if (themeDescription) themeDescription.textContent = theme.description;
+      if (themeTag) themeTag.textContent = theme.tag;
+      if (themeStatus) {
+        themeStatus.textContent = theme.status;
+        themeStatus.classList.toggle('is-roadmap', Boolean(theme.roadmap));
       }
+    }
+
+    themeButtons.forEach((button, index) => {
+      button.addEventListener('click', () => selectTheme(button));
+      button.addEventListener('keydown', event => {
+        let nextIndex;
+        if (event.key === 'ArrowRight') nextIndex = (index + 1) % themeButtons.length;
+        else if (event.key === 'ArrowLeft') nextIndex = (index - 1 + themeButtons.length) % themeButtons.length;
+        else if (event.key === 'Home') nextIndex = 0;
+        else if (event.key === 'End') nextIndex = themeButtons.length - 1;
+        else return;
+        event.preventDefault();
+        selectTheme(themeButtons[nextIndex]);
+        themeButtons[nextIndex].focus();
+      });
     });
-  });
+
+    selectTheme(themeButtons.find(button => button.classList.contains('active')) || themeButtons[0]);
+  }
 
   /* =========================================================================
-     6. MODAL DE DOWNLOAD & DOAÇÃO (WINRAR / ITCH.IO STYLE)
+     2. MODAL DE DOWNLOAD & DOAÇÃO (WINRAR / ITCH.IO STYLE)
      ========================================================================= */
   const downloadModal = document.getElementById('download-modal');
   const closeModalBtn = document.getElementById('close-modal-btn');
@@ -215,40 +143,52 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnModalFreeDownload = document.getElementById('btn-modal-free-download');
   const modalContentNormal = document.getElementById('modal-content-normal');
   const modalContentThankyou = document.getElementById('modal-content-thankyou');
-  const btnThankyouClose = document.getElementById('btn-thankyou-close');
 
-  let currentTargetFile = 'DevAutomationKit-Setup-1.0.1.exe';
+  const defaultTargetFile = 'https://github.com/AlanClimaco/dev-automation-kit-web/releases/download/v0.1.3-alpha/DevAutomationKit-Setup-0.1.3-alpha.exe';
+  let currentTargetFile = defaultTargetFile;
+  let modalOpener = null;
+  let thankyouTimeout = null;
 
   function openModal(fileName) {
-    currentTargetFile = fileName || 'DevAutomationKit-Setup-1.0.1.exe';
+    clearTimeout(thankyouTimeout);
+    thankyouTimeout = null;
+    modalOpener = document.activeElement;
+    currentTargetFile = fileName || defaultTargetFile;
     if (modalSelectedFile) {
-      modalSelectedFile.textContent = currentTargetFile;
+      modalSelectedFile.textContent = currentTargetFile.split('/').pop();
     }
 
-    if (modalContentNormal && modalContentThankyou) {
-      modalContentNormal.classList.remove('hidden');
-      modalContentThankyou.classList.add('hidden');
-    }
+    if (modalContentNormal) modalContentNormal.hidden = false;
+    if (modalContentThankyou) modalContentThankyou.hidden = true;
+    if (btnModalSupport) btnModalSupport.disabled = false;
 
     if (downloadModal) {
       downloadModal.classList.remove('inactive');
       downloadModal.classList.add('active');
+      downloadModal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
+      const modalDialog = downloadModal.querySelector('.modal-dialog');
+      if (modalDialog) modalDialog.scrollTop = 0;
+      if (closeModalBtn) closeModalBtn.focus();
     }
   }
 
   function closeModal() {
+    clearTimeout(thankyouTimeout);
+    thankyouTimeout = null;
     if (downloadModal) {
       downloadModal.classList.remove('active');
       downloadModal.classList.add('inactive');
       document.body.style.overflow = '';
+      if (modalOpener) modalOpener.focus();
+      downloadModal.setAttribute('aria-hidden', 'true');
     }
   }
 
   openModalBtns.forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
-      const target = btn.getAttribute('data-download-target') || 'DevAutomationKit-Setup-1.0.1.exe';
+      const target = btn.getAttribute('data-download-target') || defaultTargetFile;
       openModal(target);
     });
   });
@@ -262,6 +202,19 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab' && downloadModal && downloadModal.classList.contains('active')) {
+      const focusable = Array.from(downloadModal.querySelectorAll('button, input, a[href]'))
+        .filter(element => element.getClientRects().length && !element.disabled);
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
     if (e.key === 'Escape') {
       if (downloadModal && downloadModal.classList.contains('active')) {
         closeModal();
@@ -273,107 +226,105 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   /* =========================================================================
-     7. COPIAR CHAVE PIX & TOAST NOTIFICATION
+     3. COPIAR CHAVE PIX & TOAST NOTIFICATION
      ========================================================================= */
   const copyPixBtn = document.getElementById('copy-pix-btn');
   const pixKeyInput = document.getElementById('pix-key-input');
   const copyPixText = document.getElementById('copy-pix-text');
   const toast = document.getElementById('toast');
   const toastMessage = document.getElementById('toast-message');
+  const toastIcon = document.getElementById('toast-icon');
+  const pixCode = '00020101021126580014br.gov.bcb.pix013676f14e3c-6148-4c4a-a053-9847c7ad69365204000053039865802BR5917ALAN DO N CLIMACO6011NOVA MAMORE62070503***6304A8F1';
+  let toastTimeout;
 
-  function showToast(message, duration = 3200) {
+  if (pixKeyInput) pixKeyInput.value = pixCode;
+
+  function showToast(message, duration = 3200, icon = 'check') {
     if (!toast || !toastMessage) return;
     toastMessage.textContent = message;
+    if (toastIcon) {
+      const iconElement = document.createElement('i');
+      iconElement.setAttribute('data-lucide', icon);
+      iconElement.className = 'w-3.5 h-3.5';
+      toastIcon.replaceChildren(iconElement);
+      if (window.lucide && typeof window.lucide.createIcons === 'function') {
+        window.lucide.createIcons();
+      }
+    }
     toast.classList.add('show');
 
-    setTimeout(() => {
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(() => {
       toast.classList.remove('show');
     }, duration);
   }
 
   if (copyPixBtn && pixKeyInput) {
     copyPixBtn.addEventListener('click', async () => {
-      const textToCopy = pixKeyInput.value;
-
       try {
-        if (navigator.clipboard && window.isSecureContext) {
-          await navigator.clipboard.writeText(textToCopy);
-        } else {
-          pixKeyInput.select();
-          document.execCommand('copy');
+        if (!navigator.clipboard || !window.isSecureContext) {
+          throw new Error('Clipboard API indisponível');
         }
+        await navigator.clipboard.writeText(pixCode);
 
         if (copyPixText) copyPixText.textContent = 'Copiado!';
         copyPixBtn.classList.add('bg-[#2ea043]/20', 'text-[#3fb950]', 'border-[#2ea043]/40');
-        showToast('Chave Pix copiada para a área de transferência! 🚀');
+        showToast('Chave Pix copiada com sucesso! Obrigado pelo café', 3200, 'coffee');
 
         setTimeout(() => {
-          if (copyPixText) copyPixText.textContent = 'Copiar';
+          if (copyPixText) copyPixText.textContent = 'Copiar Chave Pix';
           copyPixBtn.classList.remove('bg-[#2ea043]/20', 'text-[#3fb950]', 'border-[#2ea043]/40');
         }, 2200);
 
       } catch (err) {
-        showToast('Selecione e copie manualmente o código Pix.');
+        pixKeyInput.focus();
+        pixKeyInput.select();
+        showToast('Selecione e copie manualmente o código Pix.', 3200, 'circle-alert');
       }
     });
   }
 
   /* =========================================================================
-     8. DISPARAR DOWNLOAD REAL
+     4. DOWNLOAD DOS BINÁRIOS & APOIO OPCIONAL
      ========================================================================= */
   function triggerDownload(fileName) {
-    const sampleContent = `Dev Automation Kit v1.0.1
-=====================================================
-Pacote Selecionado: ${fileName}
-Data: ${new Date().toLocaleString('pt-BR')}
+    if (!fileName) return;
 
-Este arquivo é informativo e não contém o aplicativo.
-
-Para documentação oficial e novidades do projeto, acesse:
-https://github.com/AlanClimaco/dev-automation-kit-web
-=====================================================
-Obrigado por utilizar o Dev Automation Kit!`;
-
-    const blob = new Blob([sampleContent], { type: 'text/plain;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
+    const downloadName = fileName.split('/').pop();
     const downloadAnchor = document.createElement('a');
-    downloadAnchor.href = url;
-    downloadAnchor.download = fileName.endsWith('.txt') ? fileName : `${fileName}.info.txt`;
+    downloadAnchor.href = fileName;
+    downloadAnchor.setAttribute('download', downloadName);
+    downloadAnchor.hidden = true;
     document.body.appendChild(downloadAnchor);
     downloadAnchor.click();
     document.body.removeChild(downloadAnchor);
-    URL.revokeObjectURL(url);
+
+    showToast(`Iniciando download de ${downloadName}...`, 3200, 'download');
   }
 
   if (btnModalFreeDownload) {
     btnModalFreeDownload.addEventListener('click', () => {
-      closeModal();
-      showToast(`Gerando arquivo informativo para ${currentTargetFile}...`);
       triggerDownload(currentTargetFile);
+      closeModal();
     });
   }
 
   if (btnModalSupport) {
     btnModalSupport.addEventListener('click', () => {
+      if (btnModalSupport.disabled) return;
+      btnModalSupport.disabled = true;
       if (modalContentNormal && modalContentThankyou) {
-        modalContentNormal.classList.add('hidden');
-        modalContentThankyou.classList.remove('hidden');
+        modalContentNormal.hidden = true;
+        modalContentThankyou.hidden = false;
+        modalContentThankyou.focus();
       }
-
-      showToast('Obrigado de coração pelo apoio ao projeto! ❤️');
-
-      setTimeout(() => {
-        triggerDownload(currentTargetFile);
-      }, 1500);
+      triggerDownload(currentTargetFile);
+      thankyouTimeout = setTimeout(closeModal, 2000);
     });
   }
 
-  if (btnThankyouClose) {
-    btnThankyouClose.addEventListener('click', closeModal);
-  }
-
   /* =========================================================================
-     9. FORMULÁRIO DE CONTATO / FEEDBACK (FORMSPREE AJAX + STATUS MODAL)
+     5. FORMULÁRIO DE CONTATO / FEEDBACK (FORMSPREE AJAX + STATUS MODAL)
      ========================================================================= */
   const contactForm = document.getElementById('form-contato');
   const modalBackdrop = document.getElementById('modal-backdrop');
@@ -428,6 +379,7 @@ Obrigado por utilizar o Dev Automation Kit!`;
       const messageInput = document.getElementById('message');
       const submitBtn = contactForm.querySelector('button[type="submit"]');
       const btnSpan = submitBtn ? submitBtn.querySelector('span') : null;
+      if (submitBtn && submitBtn.disabled) return;
 
       const name = nameInput ? nameInput.value.trim() : '';
       const email = emailInput ? emailInput.value.trim() : '';
@@ -463,7 +415,7 @@ Obrigado por utilizar o Dev Automation Kit!`;
       try {
         const formData = new FormData(contactForm);
 
-        const response = await fetch('https://formspree.io/f/mrbljora', {
+        const response = await fetch('https://formspree.io/f/mdeavpvg', {
           method: 'POST',
           body: formData,
           headers: {

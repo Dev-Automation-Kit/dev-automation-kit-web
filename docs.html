@@ -6,11 +6,11 @@
   <title>Central de Documentação Oficial — Dev Automation Kit</title>
   
   <!-- SEO & Meta Tags -->
-  <meta name="description" content="Documentação técnica oficial do Dev Automation Kit: arquitetura, gerador de contexto IA, bateria de diagnósticos, motor híbrido e design system.">
-  <meta name="keywords" content="Dev Automation Kit, documentação técnica, contexto para IA, arquitetura desktop, diagnósticos JS/TS, tokens, SafeGuard">
+  <meta name="description" content="Documentação oficial do Dev Automation Kit: contexto para IA, auditorias locais, privacidade, plataformas e perguntas frequentes.">
+  <meta name="keywords" content="Dev Automation Kit, documentação, contexto para IA, diagnósticos locais, tokens, privacidade, Windows, Linux, CLI">
   <meta name="author" content="Amizael, Alan Clímaco, Wernnon">
   <meta property="og:title" content="Central de Documentação — Dev Automation Kit">
-  <meta property="og:description" content="Guia completo de arquitetura, ferramentas de contexto para LLMs e diagnósticos de código.">
+  <meta property="og:description" content="Conheça os recursos de contexto para LLMs, diagnósticos locais e distribuições Windows, Linux e CLI Node.js.">
   <meta property="og:type" content="article">
   <meta name="theme-color" content="#0d1117">
 
@@ -62,24 +62,140 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="docs-page bg-[#0d1117] text-[#f0f6fc] antialiased selection:bg-[#58a6ff]/30 selection:text-[#79c0ff]">
+  <a class="skip-link" href="#documentacao">Pular para a documentação</a>
 
   <!-- =========================================================================
        A. CABEÇALHO / NAVBAR FIXA (ESTILO DESIGN SYSTEM OFICIAL)
        ========================================================================= -->
-  <header id="main-header" class="site-header"><div class="site-header-inner"><a class="site-brand" href="index.html" ><span aria-hidden="true">&gt;_</span> Dev Automation Kit</a><nav class="site-nav" aria-label="Seções da página inicial"><a data-section-link href="index.html#sobre">Início</a><a data-section-link href="index.html#recursos">Recursos</a><a data-section-link href="index.html#temas">Temas</a><a data-section-link href="index.html#equipe">Equipe</a><a data-section-link href="index.html#contato">Contato</a></nav><div class="site-destinations"><a href="docs.html" aria-current="page">Documentação</a><a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer">GitHub</a><a class="site-download" href="index.html#download">Download</a></div><button id="mobile-menu-btn" class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">Menu</button></div><div id="mobile-menu" class="mobile-menu hidden"><nav aria-label="Seções da página inicial"><a data-section-link href="index.html#sobre">Início</a><a data-section-link href="index.html#recursos">Recursos</a><a data-section-link href="index.html#temas">Temas</a><a data-section-link href="index.html#equipe">Equipe</a><a data-section-link href="index.html#contato">Contato</a></nav><div class="mobile-destinations"><a href="docs.html" aria-current="page">Documentação</a><a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer">GitHub</a><a class="site-download" href="index.html#download">Download</a></div></div></header>
+  <header id="main-header" class="site-header"><div class="site-header-inner"><a class="site-brand" href="index.html" ><span aria-hidden="true">&gt;_</span> Dev Automation Kit<span class="site-version">v0.1.3-alpha</span></a><nav class="site-nav" aria-label="Seções da página inicial"><a data-section-link href="index.html#sobre">Início</a><a data-section-link href="index.html#recursos">Recursos</a><a data-section-link href="index.html#temas">Temas</a><a data-section-link href="index.html#equipe">Equipe</a><a data-section-link href="index.html#contato">Contato</a></nav><div class="site-destinations"><a href="docs.html" aria-current="page">Documentação</a><a class="site-download" href="index.html#download">Download</a></div><button id="mobile-menu-btn" class="menu-button" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-menu">Menu</button></div><div id="mobile-menu" class="mobile-menu hidden"><nav aria-label="Seções da página inicial"><a data-section-link href="index.html#sobre">Início</a><a data-section-link href="index.html#recursos">Recursos</a><a data-section-link href="index.html#temas">Temas</a><a data-section-link href="index.html#equipe">Equipe</a><a data-section-link href="index.html#contato">Contato</a></nav><div class="mobile-destinations"><a href="docs.html" aria-current="page">Documentação</a><a class="site-download" href="index.html#download">Download</a></div></div></header>
 
   <!-- =========================================================================
        B. HERO BANNER DA DOCUMENTAÇÃO
        ========================================================================= -->
-<main class="docs-shell"><div class="docs-intro"><p class="eyebrow">DEV AUTOMATION KIT</p><h1>Documentação</h1><p>Orientações sobre a demonstração e o funcionamento deste site.</p></div><div class="docs-layout"><aside class="docs-sidebar"><details class="docs-toc" open><summary>Sumário</summary><nav id="docs-toc" aria-label="Sumário da documentação"><a class="docs-nav-link" data-toc-link href="#filosofia">Visão geral</a><a class="docs-nav-link" data-toc-link href="#arquitetura">Este site e o aplicativo</a><a class="docs-nav-link" data-toc-link href="#contexto-ia">Preparação de contexto</a><a class="docs-nav-link" data-toc-link href="#diagnosticos">Diagnósticos</a><a class="docs-nav-link" data-toc-link href="#infraestrutura">Configuração</a><a class="docs-nav-link" data-toc-link href="#bateria-completa">Bateria de diagnósticos</a><a class="docs-nav-link" data-toc-link href="#design-system">Temas</a><a class="docs-nav-link" data-toc-link href="#licenciamento">Licença e distribuição</a><a class="docs-nav-link" data-toc-link href="#vitrine-web">Site e contato</a></nav></details></aside><article class="docs-content"><section id="filosofia" class="docs-section"><h2>Visão geral</h2><p>O Dev Automation Kit é apresentado como um aplicativo desktop para preparar contexto para IA e investigar bases de código. Esta página documenta a vitrine web e sua demonstração interativa.</p><p>O código do aplicativo desktop não está neste repositório. Detalhes de implementação e disponibilidade dos recursos precisam ser confirmados na fonte do aplicativo.</p></section>
-<section id="arquitetura" class="docs-section"><h2>Este site e o aplicativo</h2><p>Este repositório contém páginas estáticas em HTML, CSS e JavaScript. O mockup da página inicial é uma simulação: suas contagens e resultados são ilustrativos e não analisam arquivos reais.</p><div class="docs-code-container"><div class="docs-code-header"><span>Execução local do site</span><button type="button" class="copy-code-btn" aria-label="Copiar comando">Copiar</button></div><pre class="docs-code-pre"><code>python3 -m http.server 8080</code></pre></div><p>Abra <code>http://localhost:8080</code> no navegador.</p></section>
-<section id="contexto-ia" class="docs-section"><h2>Preparação de contexto</h2><p>Na demonstração, marque arquivos na árvore para alterar os indicadores e use “Gerar” para simular a criação de contexto. A contagem de tokens exibida é uma estimativa ilustrativa, não uma medição do seu projeto.</p><p>Antes de compartilhar contexto com um serviço de IA, revise o conteúdo e remova informações que não deseja enviar.</p></section>
-<section id="diagnosticos" class="docs-section"><h2>Diagnósticos</h2><p>A aba Diagnósticos apresenta exemplos de verificações de código. Os resultados mostrados são ilustrativos; a demonstração não executa uma análise.</p><p>As descrições do site mencionam clones, auditoria JS/TS, configurações e dependências. Os critérios e a disponibilidade dessas verificações devem ser confirmados no aplicativo.</p></section>
-<section id="infraestrutura" class="docs-section"><h2>Configuração</h2><p>O site não requer instalação ou compilação. Tailwind CSS, Lucide e fontes são carregados de serviços externos; o formulário envia dados ao Formspree. Uma conexão é necessária para esses recursos.</p></section>
-<section id="bateria-completa" class="docs-section"><h2>Bateria de diagnósticos</h2><p>A página inicial apresenta uma bateria de verificações como recurso do aplicativo. Consulte a documentação do aplicativo para conhecer os diagnósticos disponíveis, suas entradas e seus resultados.</p></section>
-<section id="design-system" class="docs-section"><h2>Temas</h2><p>Na seção <a href="index.html#temas">Temas</a>, selecione Dark Glass, Aero ou Cyberpunk para alterar a prévia. A seleção modifica apenas a demonstração no navegador.</p></section>
-<section id="licenciamento" class="docs-section"><h2>Licença e distribuição</h2><p>Não há arquivo de licença neste repositório. Verifique a licença e os termos de distribuição na fonte oficial do projeto antes de redistribuir o código ou o aplicativo.</p></section>
-<section id="vitrine-web" class="docs-section"><h2>Site e contato</h2><p>As opções de download abrem um modal com apoio opcional via Pix. O fluxo atual cria um arquivo <code>.info.txt</code>, não um instalador. O formulário de contato envia as informações preenchidas ao Formspree.</p><p>Para dúvidas sobre este site, consulte o <a href="https://github.com/AlanClimaco/dev-automation-kit-web">repositório web</a>.</p></section></article></div></main>
+<main id="documentacao" class="docs-shell" tabindex="-1">
+    <div class="docs-intro">
+      <p class="eyebrow">DEV AUTOMATION KIT / DOCUMENTAÇÃO OFICIAL · v0.1.3-alpha</p>
+      <h1>Engenharia local.<br><span class="text-gradient-blue-purple">Contexto para a era da IA.</span></h1>
+      <p>Objetivos, funcionalidades e garantias de privacidade do produto para desenvolvedores e equipes de engenharia.</p>
+      <div class="docs-badges"><span>Windows + Linux + CLI</span><span>Processamento local</span><span>Zero telemetria</span></div>
+    </div>
+    <div class="docs-layout">
+      <aside class="docs-sidebar glass-panel">
+        <details class="docs-toc" open>
+          <summary>Sumário da documentação</summary>
+          <nav id="docs-toc" aria-label="Sumário da documentação">
+            <a class="docs-nav-link" data-toc-link href="#o-que-e">01 · O que é o kit</a>
+            <a class="docs-nav-link" data-toc-link href="#objetivos">02 · Objetivos e propósito</a>
+            <a class="docs-nav-link" data-toc-link href="#contexto-ia">03 · Contexto para IA</a>
+            <a class="docs-nav-link" data-toc-link href="#diagnosticos">04 · Diagnósticos e auditorias</a>
+            <a class="docs-nav-link" data-toc-link href="#privacidade">05 · Privacidade e segurança</a>
+            <a class="docs-nav-link" data-toc-link href="#distribuicao-faq">06 · Distribuição e FAQ</a>
+          </nav>
+        </details>
+      </aside>
+      <article class="docs-content" aria-label="Documentação do produto">
+        <section id="o-que-e" class="docs-section glass-panel" aria-labelledby="titulo-o-que-e">
+          <p class="eyebrow">01 / VISÃO GERAL</p>
+          <h2 id="titulo-o-que-e">O que é o Dev Automation Kit</h2>
+          <p>O Dev Automation Kit é uma suíte de produtividade e diagnósticos locais multiplataforma, projetada para otimizar o trabalho de desenvolvedores e equipes de engenharia na era do desenvolvimento assistido por Inteligência Artificial.</p>
+          <p>É distribuído como aplicativo desktop para <strong>Windows e Linux</strong>, com interface visual inspirada em IDEs modernas, e como <strong>motor CLI independente</strong>. O kit resolve dois grandes gargalos do desenvolvimento moderno:</p>
+          <div class="docs-callout"><strong>Arquitetura modular v0.1.3-alpha</strong><p><strong>100% ES Modules:</strong> arquitetura modular assíncrona. O <strong>desacoplamento Core/UI</strong> mantém as regras de negócio puras em <code>src/core/</code>, independentes do Electron. O hub fica em <code>scripts/</code>. A Central de Documentação Técnica reúne os recursos para facilitar a participação da comunidade.</p></div>
+          <div class="docs-card-grid">
+            <div class="docs-card"><h3>Geração Otimizada de Contexto em Tokens para LLMs</h3><p>Reduz a inconsistência e o ruído no envio de código para IAs. Facilita a seleção, compilação, sanitização e fracionamento de repositórios em prompts limpos e otimizados para Claude, ChatGPT/GPT, Cursor, Gemini e GitHub Copilot.</p></div>
+            <div class="docs-card"><h3>Auditoria Local Pró-Ativa contra Débito Técnico</h3><p>Combate a degradação de repositórios com diagnósticos automatizados que verificam a saúde do código em segundos, sem depender de servidores ou pipelines complexos de CI/CD.</p></div>
+          </div>
+        </section>
+        <section id="objetivos" class="docs-section glass-panel" aria-labelledby="titulo-objetivos">
+          <p class="eyebrow">02 / PROPÓSITO</p>
+          <h2 id="titulo-objetivos">Objetivos e Propósito</h2>
+          <ul>
+            <li><strong>Aumentar a precisão das respostas das IAs:</strong> fornecer apenas o contexto relevante, com estimativa dinâmica de tokens e formatação padronizada.</li>
+            <li><strong>Proteger dados sensíveis e segredos:</strong> filtrar automaticamente arquivos <code>.env</code>, chaves criptográficas <code>.pem</code> e <code>.key</code>, certificados, credenciais e binários antes da compilação.</li>
+            <li><strong>Garantir privacidade 100% local:</strong> processar o código offline na máquina do usuário, sem telemetria ou envio automático de código-fonte para a nuvem.</li>
+            <li><strong>Eliminar tarefas manuais e repetitivas:</strong> substituir scripts isolados, cópia e cola e verificações manuais por um painel centralizado e intuitivo.</li>
+            <li><strong>Acelerar a integração e auditoria de projetos:</strong> identificar código duplicado, dependências fantasma e falhas de ambiente em um único clique.</li>
+          </ul>
+        </section>
+        <section id="contexto-ia" class="docs-section glass-panel" aria-labelledby="titulo-contexto">
+          <p class="eyebrow">03 / CONTEXTO PARA IA</p>
+          <h2 id="titulo-contexto">Gerador Inteligente de Contexto para IA</h2>
+          <p>O <strong>explorador visual em árvore</strong>, inspirado no VS Code, permite navegar pelas pastas e selecionar arquivos por checkboxes individuais ou em cascata.</p>
+          <p>As <strong>métricas em tempo real</strong> medem continuamente o volume em KB/MB e estimam os tokens usando aproximadamente <strong>4 caracteres por token</strong>. Essa referência ajuda a ajustar os pacotes às janelas de contexto de Claude, GPT, Cursor e Gemini.</p>
+          <div class="docs-callout"><strong>Tokens estimados ≈ número de caracteres ÷ 4</strong><p>A contagem é aproximada e oferece margem para planejar a janela de contexto; o resultado efetivo varia com o tokenizer do modelo e o conteúdo.</p></div>
+          <h3>Três modos principais de compilação</h3>
+          <div class="docs-table-wrapper" role="region" aria-label="Modos de exportação de contexto" tabindex="0">
+            <table class="docs-table">
+              <thead><tr><th scope="col">Modo</th><th scope="col">Funcionamento</th></tr></thead>
+              <tbody>
+                <tr><th scope="row"><code>--single</code><br>Arquivo único</th><td>Compila todo o código selecionado em um único arquivo <code>.txt</code>.</td></tr>
+                <tr><th scope="row"><code>--split</code><br>Divisão por partes</th><td>Fraciona a saída em partes de aproximadamente 300 KB, adequando o contexto a limites de entrada menores.</td></tr>
+                <tr><th scope="row"><code>--split-files</code><br>Forçar quebra de arquivos gigantes</th><td>Divide arquivos gigantes em partes menores, mantendo os cabeçalhos das partes organizados.</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <h3>Gerador de contexto pelo terminal</h3>
+          <p>Na raiz do repositório do aplicativo, execute o gerador em <code>src/core/context/</code>:</p>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Gerador de Contexto para IA</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Gerador de Contexto para IA">Copiar</button></div><pre class="docs-code-pre"><code>node src/core/context/contexto-ia.mjs /caminho/do/projeto --single</code></pre></div>
+          <h3>Copiar com um clique</h3>
+          <p>Um botão dedicado transfere todo o contexto compilado diretamente para a área de transferência do sistema operacional, pronto para uso na ferramenta de IA escolhida.</p>
+        </section>
+        <section id="diagnosticos" class="docs-section glass-panel" aria-labelledby="titulo-diagnosticos">
+          <p class="eyebrow">04 / SAÚDE DO REPOSITÓRIO</p>
+          <h2 id="titulo-diagnosticos">Suíte de Diagnósticos e Auditorias Locais</h2>
+          <dl class="docs-audits">
+            <div><dt>Detector de Clones de Código (CPD)</dt><dd>Mapeia blocos duplicados de lógica por análise de padronização, indicando os arquivos e as linhas exatas.</dd></div>
+            <div><dt>Auditor de Antipadrões JS/TS</dt><dd>Executa análise estática de más práticas estruturais, como <code>async useEffect</code>, chamadas assíncronas sem limpeza, supressões <code>@ts-ignore</code>, requisições desconfiguradas e logs de depuração.</dd></div>
+            <div><dt>Validador de Variáveis de Ambiente (<code>.env</code>)</dt><dd>Compara arquivos <code>.env</code> com seus modelos <code>.env.example</code> e alerta sobre chaves faltantes, valores vazios e placeholders não preenchidos.</dd></div>
+            <div><dt>Auditor de Dependências Fantasma</dt><dd>Cruza os pacotes declarados no <code>package.json</code> com as importações reais no código para sinalizar dependências não utilizadas.</dd></div>
+            <div><dt>Mapeador de Tamanho e Armazenamento</dt><dd>Analisa o peso relativo de pastas e arquivos e identifica os maiores consumidores de espaço no projeto.</dd></div>
+            <div><dt>Verificador de Links</dt><dd>Rastreia e valida referências locais e links quebrados em documentações Markdown e HTML.</dd></div>
+            <div><dt>Validador Estrutural do Repositório</dt><dd>Confere se o projeto respeita as convenções arquiteturais esperadas.</dd></div>
+          </dl>
+          <h3>Detector de clones pelo terminal</h3>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Detector de Clones de Código</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Detector de Clones de Código">Copiar</button></div><pre class="docs-code-pre"><code>node src/core/diagnostics/detectar-clones.mjs /caminho/do/projeto</code></pre></div>
+          <h3>Execução em Bateria</h3>
+          <p>Permite rodar toda a suíte de diagnósticos <strong>de forma sequencial, em um clique</strong>, com exibição de um <strong>relatório unificado e consolidado</strong>. Assim, é possível revisar os resultados e priorizar as correções em um único fluxo.</p>
+          <h3>Personalização, Temas e Gerenciamento</h3>
+          <ul>
+            <li><strong>Workspaces:</strong> alternância rápida entre projetos recentes e salvamento de workspaces favoritos.</li>
+            <li><strong>Provedores de IA:</strong> gerenciamento de chaves de API OpenAI e Gemini, com armazenamento seguro usando a criptografia nativa do sistema operacional (<code>safeStorage</code>).</li>
+            <li><strong>Temas dinâmicos:</strong> NeoMorphic Slate (Ardósia - Padrão), Light (Claro), Ocean (Oceano) e Liquid Glass. Novos temas retrô e futuristas estão planejados no roadmap.</li>
+            <li><strong>Atalhos globais de teclado:</strong> execução rápida de comandos e navegação entre abas por atalhos configurados.</li>
+          </ul>
+        </section>
+        <section id="privacidade" class="docs-section glass-panel" aria-labelledby="titulo-privacidade">
+          <p class="eyebrow">05 / PRIVACY-FIRST</p>
+          <h2 id="titulo-privacidade">Privacidade, Segurança e Modelo Local</h2>
+          <div class="docs-callout docs-callout-green"><strong>Garantia de privacidade do produto</strong><p>A leitura de arquivos, a compilação de contexto, a estimativa de tokens e a execução dos diagnósticos ocorrem 100% offline e estritamente no seu computador. Zero telemetria e zero envio de código a servidores externos durante o processamento local.</p></div>
+          <p>O aplicativo segue o princípio de <strong>Privacidade em Primeiro Lugar (Privacy-First)</strong>: não armazena dados de navegação ou conteúdo do código em nuvem nem realiza chamadas externas para executar essas tarefas locais.</p>
+          <h3>Sanitização automática</h3>
+          <p>Os filtros nativos bloqueiam segredos, credenciais, <code>.env</code>, chaves criptográficas, certificados, extensões binárias, arquivos de mídia e bancos de dados locais. Pastas de dependências e artefatos como <code>node_modules</code>, <code>dist</code> e <code>.git</code> também são excluídas da compilação de contexto.</p>
+          <p>As integrações remotas com provedores de IA cadastrados são <strong>opcionais</strong> e exigem internet somente quando o usuário decide utilizá-las. A geração de contexto e os diagnósticos locais continuam funcionando sem conexão.</p>
+        </section>
+        <section id="distribuicao-faq" class="docs-section glass-panel" aria-labelledby="titulo-distribuicao">
+          <p class="eyebrow">06 / PLATAFORMAS E DÚVIDAS</p>
+          <h2 id="titulo-distribuicao">Formas de Distribuição &amp; FAQ</h2>
+          <div class="docs-card-grid">
+            <div class="docs-card"><h3>Windows</h3><p><strong>Instalador <code>.exe</code> Setup:</strong> instalação com integração ao sistema.</p><p><strong>Versão Portátil:</strong> execução sem instalação.</p></div>
+            <div class="docs-card"><h3>Linux</h3><p><strong>Pacote nativo <code>.deb</code>:</strong> Debian, Ubuntu e derivados.</p><p><strong><code>.AppImage</code>:</strong> imagem executável universal.</p></div>
+            <div class="docs-card"><h3>CLI puro em Node.js</h3><p>Motor independente com execução via Node.js nativo, sem dependências externas, para servidores, contêineres e máquinas remotas.</p></div>
+          </div>
+          <h3>Hub Interativo no terminal</h3>
+          <p>Na raiz do repositório do aplicativo, abra o hub em <code>scripts/</code>:</p>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Hub Interativo no terminal</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Hub Interativo no terminal">Copiar</button></div><pre class="docs-code-pre"><code>npm run hub   # ou: node scripts/hub.mjs</code></pre></div>
+          <p><a href="index.html#download">Ver as opções de download <i data-lucide="arrow-right" class="w-4 h-4 inline-block align-middle" aria-hidden="true"></i></a></p>
+          <h3>Perguntas Frequentes</h3>
+          <div class="docs-faq">
+            <details open><summary>Para quem é o Dev Automation Kit?</summary><p>Para desenvolvedores individuais, lideranças técnicas e equipes de engenharia que utilizam IAs generativas no desenvolvimento de software e desejam manter seus repositórios organizados, seguros e auditados.</p></details>
+            <details><summary>O aplicativo exige conexão com a internet para funcionar?</summary><p>Não. O Dev Automation Kit funciona 100% offline para gerar contexto e executar diagnósticos. A conexão é opcional apenas se o usuário desejar usar integrações remotas com provedores de IA cadastrados.</p></details>
+            <details><summary>Como o cálculo de tokens é realizado?</summary><p>O cálculo estima o volume de texto pela contagem de caracteres, usando aproximadamente 4 caracteres por token. Essa referência fornece margem de segurança para os principais modelos, como GPT-4, Claude e Gemini; não substitui o tokenizer específico de cada modelo.</p></details>
+            <details><summary>Preciso apoiar o projeto para baixar?</summary><p>Não. O apoio via Pix é voluntário e de qualquer valor. O botão “Continuar para o Download Gratuito” permite seguir sem contribuir.</p></details>
+          </div>
+        </section>
+        <p class="docs-signature">Dev Automation Kit v0.1.3-alpha — Engenharia de Software Local, Segura e Otimizada para a Era da IA.</p>
+      </article>
+    </div>
+  </main>
 
   <!-- =========================================================================
        RODAPÉ OFICIAL (ESTILO DESIGN SYSTEM)
@@ -97,7 +213,7 @@
                 <line x1="12" x2="20" y1="19" y2="19"/>
               </svg>
             </div>
-            <span class="text-sm font-bold text-[#f0f6fc]">Dev Automation Kit</span>
+            <span class="text-sm font-bold text-[#f0f6fc]">Dev Automation Kit</span><span class="site-version">v0.1.3-alpha</span>
           </div>
           <p class="max-w-md text-xs leading-relaxed text-[#8b949e]">
             Site de apresentação e documentação do Dev Automation Kit.
@@ -121,24 +237,8 @@
         <div class="md:col-span-3 space-y-2.5">
           <h4 class="text-[#f0f6fc] font-semibold text-xs tracking-wider uppercase font-mono">Comunidade</h4>
           <ul class="space-y-1.5">
-            <li>
-              <a href="https://github.com/AlanClimaco/dev-automation-kit-web" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path><path d="M9 18c-4.51 2-5-2-7-2"></path></svg>
-                <span>Repositório GitHub</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/AlanClimaco/dev-automation-kit-web/issues" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
-                <i data-lucide="bug" class="w-3.5 h-3.5"></i>
-                <span>Reportar Bug / Sugestão</span>
-              </a>
-            </li>
-            <li>
-              <a href="https://github.com/AlanClimaco/dev-automation-kit-web/blob/main/LICENSE" target="_blank" rel="noopener noreferrer" class="hover:text-[#58a6ff] flex items-center gap-1.5 transition-colors">
-                <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
-                <span>Licença do projeto</span>
-              </a>
-            </li>
+            <li><a href="index.html#contato" class="hover:text-[#58a6ff] transition-colors">Feedback e suporte</a></li>
+            <li><a href="index.html#download" class="hover:text-[#58a6ff] transition-colors">Downloads e apoio ao projeto</a></li>
           </ul>
         </div>
 
@@ -146,7 +246,7 @@
 
       <!-- Copyright -->
       <div class="pt-6 flex flex-col sm:flex-row items-center justify-between text-[#6e7681] gap-3">
-        <p>© 2026 Dev Automation Kit. Criado por Amizael, Alan Clímaco e Wernnon.</p>
+        <p>&copy; 2026 Dev Automation Kit. Criado por Amizael, Alan Clímaco e Wernnon.</p>
         <a href="#" class="hover:text-[#f0f6fc] transition-colors flex items-center gap-1">
           <span>Voltar ao topo</span>
           <i data-lucide="arrow-up" class="w-3 h-3"></i>
