@@ -74,9 +74,9 @@
        ========================================================================= -->
 <main id="documentacao" class="docs-shell" tabindex="-1">
     <div class="docs-intro">
-      <p class="eyebrow">DEV AUTOMATION KIT / DOCUMENTAÇÃO OFICIAL · v0.1.3-alpha</p>
-      <h1>Engenharia local.<br><span class="text-gradient-blue-purple">Contexto para a era da IA.</span></h1>
-      <p>Objetivos, funcionalidades e garantias de privacidade do produto para desenvolvedores e equipes de engenharia.</p>
+      <p class="eyebrow">DEV AUTOMATION KIT / DOCUMENTAÇÃO OFICIAL <span class="release-badge">v0.1.3-alpha</span></p>
+      <h1>Engenharia local.<br><span class="text-[#58a6ff]">Contexto para a era da IA.</span></h1>
+      <p class="text-[#8b949e] text-base sm:text-lg leading-relaxed mt-4">Objetivos, funcionalidades e garantias de privacidade do produto para desenvolvedores e equipes de engenharia.</p>
       <div class="docs-badges"><span>Windows + Linux + CLI</span><span>Processamento local</span><span>Zero telemetria</span></div>
     </div>
     <div class="docs-layout">
@@ -101,8 +101,8 @@
           <p>É distribuído como aplicativo desktop para <strong>Windows e Linux</strong>, com interface visual inspirada em IDEs modernas, e como <strong>motor CLI independente</strong>. O kit resolve dois grandes gargalos do desenvolvimento moderno:</p>
           <div class="docs-callout"><strong>Arquitetura modular v0.1.3-alpha</strong><p><strong>100% ES Modules:</strong> arquitetura modular assíncrona. O <strong>desacoplamento Core/UI</strong> mantém as regras de negócio puras em <code>src/core/</code>, independentes do Electron. O hub fica em <code>scripts/</code>. A Central de Documentação Técnica reúne os recursos para facilitar a participação da comunidade.</p></div>
           <div class="docs-card-grid">
-            <div class="docs-card"><h3>Geração Otimizada de Contexto em Tokens para LLMs</h3><p>Reduz a inconsistência e o ruído no envio de código para IAs. Facilita a seleção, compilação, sanitização e fracionamento de repositórios em prompts limpos e otimizados para Claude, ChatGPT/GPT, Cursor, Gemini e GitHub Copilot.</p></div>
-            <div class="docs-card"><h3>Auditoria Local Pró-Ativa contra Débito Técnico</h3><p>Combate a degradação de repositórios com diagnósticos automatizados que verificam a saúde do código em segundos, sem depender de servidores ou pipelines complexos de CI/CD.</p></div>
+            <div class="docs-card glass-card"><h3>Geração Otimizada de Contexto em Tokens para LLMs</h3><p>Reduz a inconsistência e o ruído no envio de código para IAs. Facilita a seleção, compilação, sanitização e fracionamento de repositórios em prompts limpos e otimizados para Claude, ChatGPT/GPT, Cursor, Gemini e GitHub Copilot.</p></div>
+            <div class="docs-card glass-card"><h3>Auditoria Local Pró-Ativa contra Débito Técnico</h3><p>Combate a degradação de repositórios com diagnósticos automatizados que verificam a saúde do código em segundos, sem depender de servidores ou pipelines complexos de CI/CD.</p></div>
           </div>
         </section>
         <section id="objetivos" class="docs-section glass-panel" aria-labelledby="titulo-objetivos">
@@ -135,7 +135,7 @@
           </div>
           <h3>Gerador de contexto pelo terminal</h3>
           <p>Na raiz do repositório do aplicativo, execute o gerador em <code>src/core/context/</code>:</p>
-          <div class="docs-code-container"><div class="docs-code-header"><span>Gerador de Contexto para IA</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Gerador de Contexto para IA">Copiar</button></div><pre class="docs-code-pre"><code>node src/core/context/contexto-ia.mjs /caminho/do/projeto --single</code></pre></div>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Gerador de Contexto para IA</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Gerador de Contexto para IA"><i data-lucide="copy" class="w-3.5 h-3.5 inline-block mr-1" aria-hidden="true"></i>Copiar</button></div><pre class="docs-code-pre"><code>node src/core/context/contexto-ia.mjs /caminho/do/projeto --single</code></pre></div>
           <h3>Copiar com um clique</h3>
           <p>Um botão dedicado transfere todo o contexto compilado diretamente para a área de transferência do sistema operacional, pronto para uso na ferramenta de IA escolhida.</p>
         </section>
@@ -152,7 +152,7 @@
             <div><dt>Validador Estrutural do Repositório</dt><dd>Confere se o projeto respeita as convenções arquiteturais esperadas.</dd></div>
           </dl>
           <h3>Detector de clones pelo terminal</h3>
-          <div class="docs-code-container"><div class="docs-code-header"><span>Detector de Clones de Código</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Detector de Clones de Código">Copiar</button></div><pre class="docs-code-pre"><code>node src/core/diagnostics/detectar-clones.mjs /caminho/do/projeto</code></pre></div>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Detector de Clones de Código</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Detector de Clones de Código"><i data-lucide="copy" class="w-3.5 h-3.5 inline-block mr-1" aria-hidden="true"></i>Copiar</button></div><pre class="docs-code-pre"><code>node src/core/diagnostics/detectar-clones.mjs /caminho/do/projeto</code></pre></div>
           <h3>Execução em Bateria</h3>
           <p>Permite rodar toda a suíte de diagnósticos <strong>de forma sequencial, em um clique</strong>, com exibição de um <strong>relatório unificado e consolidado</strong>. Assim, é possível revisar os resultados e priorizar as correções em um único fluxo.</p>
           <h3>Personalização, Temas e Gerenciamento</h3>
@@ -176,13 +176,13 @@
           <p class="eyebrow">06 / PLATAFORMAS E DÚVIDAS</p>
           <h2 id="titulo-distribuicao">Formas de Distribuição &amp; FAQ</h2>
           <div class="docs-card-grid">
-            <div class="docs-card"><h3>Windows</h3><p><strong>Instalador <code>.exe</code> Setup:</strong> instalação com integração ao sistema.</p><p><strong>Versão Portátil:</strong> execução sem instalação.</p></div>
-            <div class="docs-card"><h3>Linux</h3><p><strong>Pacote nativo <code>.deb</code>:</strong> Debian, Ubuntu e derivados.</p><p><strong><code>.AppImage</code>:</strong> imagem executável universal.</p></div>
-            <div class="docs-card"><h3>CLI puro em Node.js</h3><p>Motor independente com execução via Node.js nativo, sem dependências externas, para servidores, contêineres e máquinas remotas.</p></div>
+            <div class="docs-card glass-card"><h3>Windows</h3><p><strong>Instalador <code>.exe</code> Setup:</strong> instalação com integração ao sistema.</p><p><strong>Versão Portátil:</strong> execução sem instalação.</p></div>
+            <div class="docs-card glass-card"><h3>Linux</h3><p><strong>Pacote nativo <code>.deb</code>:</strong> Debian, Ubuntu e derivados.</p><p><strong><code>.AppImage</code>:</strong> imagem executável universal.</p></div>
+            <div class="docs-card glass-card"><h3>CLI puro em Node.js</h3><p>Motor independente com execução via Node.js nativo, sem dependências externas, para servidores, contêineres e máquinas remotas.</p></div>
           </div>
           <h3>Hub Interativo no terminal</h3>
           <p>Na raiz do repositório do aplicativo, abra o hub em <code>scripts/</code>:</p>
-          <div class="docs-code-container"><div class="docs-code-header"><span>Hub Interativo no terminal</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Hub Interativo no terminal">Copiar</button></div><pre class="docs-code-pre"><code>npm run hub   # ou: node scripts/hub.mjs</code></pre></div>
+          <div class="docs-code-container"><div class="docs-code-header"><span>Hub Interativo no terminal</span><button type="button" class="copy-code-btn" aria-label="Copiar comando: Hub Interativo no terminal"><i data-lucide="copy" class="w-3.5 h-3.5 inline-block mr-1" aria-hidden="true"></i>Copiar</button></div><pre class="docs-code-pre"><code>npm run hub   # ou: node scripts/hub.mjs</code></pre></div>
           <p><a href="index.html#download">Ver as opções de download <i data-lucide="arrow-right" class="w-4 h-4 inline-block align-middle" aria-hidden="true"></i></a></p>
           <h3>Perguntas Frequentes</h3>
           <div class="docs-faq">
