@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
       heading: 'Diagnóstico em Andamento',
       description: 'O estilo Dark Glass oferece contraste ideal para programar em ambientes com baixa luminosidade, reduzindo a fadiga visual com camadas translúcidas e destaques azuis e roxos.',
       status: 'Dark Glass UI',
-      tag: 'Engine v0.1.3-alpha'
+      tag: 'Engine v0.1.4f-alpha'
     },
     light: {
       className: 'theme-light',
@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       heading: 'Clareza em cada diagnóstico',
       description: 'Light oferece superfícies claras e alto contraste para analisar projetos em ambientes iluminados.',
       status: 'Light UI',
-      tag: 'Engine v0.1.3-alpha'
+      tag: 'Engine v0.1.4f-alpha'
     },
     aero: {
       className: 'theme-aero',
@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     cyber: {
       className: 'theme-cyberpunk',
-      title: 'DEV_AUTOMATION_KIT // [CYBER_NEON_v0.1.3-alpha]',
+      title: 'DEV_AUTOMATION_KIT // [CYBER_NEON_v0.1.4f-alpha]',
       heading: 'SYSTEM_DIAGNOSTICS_ACTIVE',
       description: 'Paleta agressiva de alto contraste com ciano elétrico e magenta neon, linhas de varredura CRT e visual utilitário terminal de ficção científica.',
       status: 'CYBERPUNK HUD · Em desenvolvimento',
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalContentNormal = document.getElementById('modal-content-normal');
   const modalContentThankyou = document.getElementById('modal-content-thankyou');
 
-  const defaultTargetFile = 'https://github.com/AlanClimaco/dev-automation-kit-web/releases/download/v0.1.3-alpha/DevAutomationKit-Setup-0.1.3-alpha.exe';
+  const defaultTargetFile = 'https://github.com/Dev-Automation-Kit/dev-automation-kit-web/releases/download/v0.1.4f-alpha/DevAutomationKit-Setup-0.1.4-alpha.exe';
   let currentTargetFile = defaultTargetFile;
   let modalOpener = null;
   let thankyouTimeout = null;
